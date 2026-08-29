@@ -16,10 +16,17 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 
 ## Equipe
  
-Projeto desenvolvido para a disciplina de Projetos 2 (2º período ADS) — CESAR School, integrando os componentes curriculares de Programação, IHC/HCI, Lógica, FDS e FP2.
- 
-- **Visão e requisitos:** Carlos Daniel, Davi Braz, Davi Soares, João Victor, José Nalbert, Kauã Mateus, Luis Silva
+- **Visão e requisitos:** Carlos Daniel, Davi Braz, Davi Pereira, João Victor, José Nalbert, Kauã Mateus, Luis Silva
 ---
+
+Link do LinkedIn:
+Davi Braz: https://www.linkedin.com/in/davibrazs?utm_source=share_via&utm_content=profile&utm_medium=member_ios
+Davi Pereira: https://www.linkedin.com/in/davi-pereira-0040b53b7?utm_source=share_via&utm_content=profile&utm_medium=member_android
+Carlos Daniel: https://www.linkedin.com/in/carlos-daniel2?utm_source=share_via&utm_content=profile&utm_medium=member_android
+Antonio: https://www.linkedin.com/in/antonio-de-oliveira-chaves-neto-7a71803b7?utm_source=share_via&utm_content=profile&utm_medium=member_ios
+Nalbert: https://www.linkedin.com/in/nalbert-gonçalves-2a764b375?utm_source=share_via&utm_content=profile&utm_medium=member_ios
+João: https://www.linkedin.com/in/joaovictortvs?utm_source=share_via&utm_content=profile&utm_medium=member_ios
+Luis: https://www.linkedin.com/in/lgc-s?utm_source=share_via&utm_content=profile&utm_medium=member_android
  
 ### Estrutura narrativa em atos
  
