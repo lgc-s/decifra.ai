@@ -14,19 +14,17 @@ Você é recém-contratado(a) do **Departamento de Alfabetização Algorítmica*
  
 Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar cidadãos que abrem chamados de reclamação sobre ela.
 
-## Equipe
- 
-- **Visão e requisitos:** Carlos Daniel, Davi Braz, Davi Pereira, João Victor, José Nalbert, Kauã Mateus, Luis Silva
----
+### 👨‍💻 Equipe
 
-Link do LinkedIn:
-Davi Braz: https://www.linkedin.com/in/davibrazs?utm_source=share_via&utm_content=profile&utm_medium=member_ios
-Davi Pereira: https://www.linkedin.com/in/davi-pereira-0040b53b7?utm_source=share_via&utm_content=profile&utm_medium=member_android
-Carlos Daniel: https://www.linkedin.com/in/carlos-daniel2?utm_source=share_via&utm_content=profile&utm_medium=member_android
-Antonio: https://www.linkedin.com/in/antonio-de-oliveira-chaves-neto-7a71803b7?utm_source=share_via&utm_content=profile&utm_medium=member_ios
-Nalbert: https://www.linkedin.com/in/nalbert-gonçalves-2a764b375?utm_source=share_via&utm_content=profile&utm_medium=member_ios
-João: https://www.linkedin.com/in/joaovictortvs?utm_source=share_via&utm_content=profile&utm_medium=member_ios
-Luis: https://www.linkedin.com/in/lgc-s?utm_source=share_via&utm_content=profile&utm_medium=member_android
+| Nome | LinkedIn |
+| :--- | :--- |
+| **Davi Braz** | [Acessar Perfil](https://www.linkedin.com/in/davibrazs) |
+| **Davi Pereira** | [Acessar Perfil](https://www.linkedin.com/in/davi-pereira-0040b53b7) |
+| **Carlos Daniel** | [Acessar Perfil](https://www.linkedin.com/in/carlos-daniel2) |
+| **Antonio** | [Acessar Perfil](https://www.linkedin.com/in/antonio-de-oliveira-chaves-neto-7a71803b7) |
+| **Nalbert** | [Acessar Perfil](https://www.linkedin.com/in/nalbert-gonçalves-2a764b375) |
+| **João** | [Acessar Perfil](https://www.linkedin.com/in/joaovictortvs) |
+| **Luis** | [Acessar Perfil](https://www.linkedin.com/in/lgc-s) |
  
 ### Estrutura narrativa em atos
  
