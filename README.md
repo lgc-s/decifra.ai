@@ -14,7 +14,7 @@ Você é recém-contratado(a) do **Departamento de Alfabetização Algorítmica*
  
 Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar cidadãos que abrem chamados de reclamação sobre ela.
 
-### 👨‍💻 Equipe
+### Equipe
 
 | Nome | LinkedIn |
 | :--- | :--- |
@@ -25,7 +25,20 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | **Nalbert** | [Acessar Perfil](https://www.linkedin.com/in/nalbert-gonçalves-2a764b375) |
 | **João** | [Acessar Perfil](https://www.linkedin.com/in/joaovictortvs) |
 | **Luis** | [Acessar Perfil](https://www.linkedin.com/in/lgc-s) |
- 
+
+### Progresso Semanal
+
+| Semana | Atividade                    | Responsável  |
+| :---   | :---                         | :---         |
+| 1      | Sem Atividade (Apresentação) | *Nenhum*     |
+| 2-3    | Project Model Canvas         | Nalbert      |
+| 2-3    | Personagas                   | Davi Pereira |
+| 2-3    | Ideação do Projeto           | Todos        |
+| 2-3    | Visão e Requsitos            | Luis         |
+| 4-5    | Setup do GitHub              | Luis         |
+| 4-5    | Rascunhos da Tela de Jogo    | João         |
+| 4-5    | Código Inicial               | Kauã Mateus  |
+
 ### Estrutura narrativa em atos
  
 | Ato | Nome | Descrição |
