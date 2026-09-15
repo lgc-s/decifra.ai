@@ -32,8 +32,8 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | :---   | :---                         | :---         |
 | 1      | Sem Atividade (Apresentação) | *Nenhum*     |
 | 2-3    | Project Model Canvas         | Nalbert      |
-| 2-3    | Personagas                   | Davi Pereira |
 | 2-3    | Ideação do Projeto           | Todos        |
+| 2-3    | Personas                     | Davi Pereira |
 | 2-3    | Visão e Requsitos            | Luis         |
 | 4-5    | Setup do GitHub              | Luis         |
 | 4-5    | Rascunhos da Tela de Jogo    | João         |
