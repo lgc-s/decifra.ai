@@ -98,7 +98,7 @@ O design do jogo é guiado por dois perfis-alvo principais:
 
 ## Diagramas de Atividades
 
-📊 [Ver diagramas de atividades de cada história de usuário](docs/diagramas-atividades.md)
+📊 [Ver diagramas de atividades de cada história de usuário](./diagramas-atividades.md)
 
 ---
 
