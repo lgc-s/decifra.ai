@@ -25,7 +25,6 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | **Nalbert** | [Acessar Perfil](https://www.linkedin.com/in/nalbert-gonçalves-2a764b375) |
 | **João** | [Acessar Perfil](https://www.linkedin.com/in/joaovictortvs) |
 | **Luis** | [Acessar Perfil](https://www.linkedin.com/in/lgc-s) |
-| **Kauã Mateus** | [Acessar Perfil](https://www.linkedin.com/in/kauã-mateus-alves-a499442ba/) |
 
 ### Progresso Semanal
 
@@ -98,7 +97,7 @@ O design do jogo é guiado por dois perfis-alvo principais:
 
 ## Diagramas de Atividades
 
-📊 [Ver diagramas de atividades de cada história de usuário](./diagramas-atividades.md)
+📊 [Ver diagramas de atividades de cada história de usuário](docs/diagramas-atividades.md)
 
 ---
 
