@@ -109,3 +109,11 @@ O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversati
 - Sprint 2 — Ato 2 / Rotina de Chamados
 - Sprint 3 — Ato 3 / Escândalo
 - Sprint 4 — Ato 4 / Desfecho
+
+---
+
+## Demonstração
+
+[![Assistir ao screencast do protótipo](https://img.youtube.com/vi/Xda-MFSF_Vs/0.jpg)](https://www.youtube.com/watch?v=Xda-MFSF_Vs)
+
+🎥 [Assistir ao screencast do protótipo](https://www.youtube.com/watch?v=Xda-MFSF_Vs)
