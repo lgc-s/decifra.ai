@@ -25,6 +25,8 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | **Nalbert** | [Acessar Perfil](https://www.linkedin.com/in/nalbert-gonçalves-2a764b375) |
 | **João** | [Acessar Perfil](https://www.linkedin.com/in/joaovictortvs) |
 | **Luis** | [Acessar Perfil](https://www.linkedin.com/in/lgc-s) |
+| **Kauã** | [Acessar Perfil](https://www.linkedin.com/in/kauã-mateus-alves-a499442ba/) |
+
 
 ### Progresso Semanal
 
@@ -38,6 +40,12 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | 4-5    | Setup do GitHub              | Luis         |
 | 4-5    | Rascunhos da Tela de Jogo    | João         |
 | 4-5    | Código Inicial               | Kauã Mateus  |
+| 6-7    | Regras formalizadas          | Antônio      |
+| 6-7    | Núcleo jogável em C          | Carlos, Davi |
+| 6-7    | Regras formalizadas          | Antônio      |
+| 6-7    | Backlog                      | João         |
+| 6-7    | Wireframes                   | Nalbert      |
+
 
 ### Estrutura narrativa em atos
 
@@ -97,7 +105,7 @@ O design do jogo é guiado por dois perfis-alvo principais:
 
 ## Diagramas de Atividades
 
-📊 [Ver diagramas de atividades de cada história de usuário](docs/diagramas-atividades.md)
+📊 [Ver diagramas de atividades de cada história de usuário](./diagramas-atividades.md)
 
 ---
 
