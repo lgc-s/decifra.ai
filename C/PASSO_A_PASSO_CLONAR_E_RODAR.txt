@@ -1,0 +1,378 @@
+==============================================================================
+ DECIFRA.IA -- COMO CLONAR O REPOSITORIO E RODAR O JOGO
+ Duas formas: (A) pelo VS Code   (B) gerando um .exe e abrindo em outra janela
+==============================================================================
+
+Neste guia, troque os nomes em MAIUSCULAS pelos valores reais do seu caso:
+
+  URL_DO_REPOSITORIO   endereco do repositorio no GitHub
+                       (ex.: https://github.com/usuario/decifra.ai.git)
+  PASTA_DO_JOGO        pasta que contem o arquivo .c do jogo
+                       (ex.: decifra.ai/C)
+  ARQUIVO_DO_JOGO      nome do arquivo .c do jogo, sem a extensao
+                       (ex.: decifra_refatorado)
+
+SUMARIO
+  1. Instalar as ferramentas (uma unica vez)
+  2. Clonar o repositorio
+  3. Conferir os arquivos do jogo
+  4. OPCAO A -- Rodar pelo VS Code
+  5. OPCAO B -- Gerar o .exe e rodar em outra janela
+  6. Levar o .exe para um computador sem nada instalado
+  7. Problemas comuns
+  8. Observacao para Linux
+
+
+==============================================================================
+ 1. INSTALAR AS FERRAMENTAS (UMA UNICA VEZ, NO WINDOWS)
+==============================================================================
+
+1.1 Git
+    Baixe em https://git-scm.com e instale com as opcoes padrao.
+
+1.2 VS Code
+    Baixe em https://code.visualstudio.com e instale.
+    Depois abra o VS Code, clique no icone de Extensoes (blocos, na barra
+    da esquerda), pesquise "C/C++" (Microsoft) e instale.
+
+1.3 MSYS2 (compilador e bibliotecas do jogo)
+    a) Baixe em https://www.msys2.org e instale com as opcoes padrao
+       (vai para C:\msys64).
+    b) No menu iniciar, abra o "MSYS2 UCRT64".
+       Tem que ser o UCRT64, nao o "MSYS2 MSYS" nem o "MINGW64".
+    c) Rode:
+
+         pacman -Syu
+
+       Se ele pedir para fechar o terminal, feche, abra o UCRT64 de novo
+       e rode "pacman -Syu" outra vez.
+    d) Instale o compilador e as bibliotecas:
+
+         pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-SDL2 mingw-w64-ucrt-x86_64-SDL2_ttf mingw-w64-ucrt-x86_64-SDL2_mixer
+
+       Confirme com Y quando perguntar.
+
+    Dica: se um comando colado no terminal MSYS2 der erro com "^[[200~",
+    cole usando o botao direito do mouse ou digite o comando na mao.
+
+1.4 Colocar o compilador no PATH do Windows
+    a) Menu iniciar > "Variaveis de ambiente" > "Editar as variaveis de
+       ambiente do sistema".
+    b) Clique em "Variaveis de Ambiente...".
+    c) Em "Variaveis do usuario", selecione "Path" > Editar > Novo.
+    d) Cole:   C:\msys64\ucrt64\bin
+    e) OK em todas as janelas.
+    f) Feche o VS Code por completo e abra de novo. Se nao pegar, reinicie
+       o Windows.
+
+    Se o computador ja tiver outro MinGW instalado (ex.: C:\MinGW\bin), o
+    caminho do ucrt64 precisa ficar ACIMA dele na lista. O Windows tem duas
+    listas de Path (Usuario e Sistema) e a de Sistema vem primeiro: confira
+    as duas.
+
+1.5 Conferir a instalacao
+    Abra um terminal NOVO (cmd ou o terminal do VS Code) e rode:
+
+         gcc --version
+         where gcc
+
+    O primeiro resultado do "where gcc" deve ser:
+         C:\msys64\ucrt64\bin\gcc.exe
+
+
+==============================================================================
+ 2. CLONAR O REPOSITORIO
+==============================================================================
+
+Forma 1 -- pelo terminal (cmd, PowerShell ou Git Bash):
+
+    cd %USERPROFILE%\Documents
+    git clone URL_DO_REPOSITORIO
+    cd PASTA_DO_JOGO
+    code .
+
+  O "code ." abre o VS Code ja dentro da pasta do jogo.
+  (Em PowerShell, use $env:USERPROFILE no lugar de %USERPROFILE%.)
+
+Forma 2 -- pelo proprio VS Code:
+
+    1. Aperte Ctrl+Shift+P.
+    2. Digite "Git: Clone" e escolha essa opcao.
+    3. Cole a URL_DO_REPOSITORIO e escolha onde salvar.
+    4. Quando ele perguntar, clique em "Abrir".
+    5. Se o jogo estiver numa subpasta (ex.: C), abra essa subpasta com
+       Arquivo > Abrir Pasta, para o VS Code enxergar a pasta ".vscode".
+
+Importante: abra no VS Code a pasta que CONTEM o arquivo .c do jogo e a
+pasta ".vscode". Se abrir uma pasta acima, o atalho de compilacao nao sera
+encontrado.
+
+
+==============================================================================
+ 3. CONFERIR OS ARQUIVOS DO JOGO
+==============================================================================
+
+Dentro de PASTA_DO_JOGO deve existir:
+
+    ARQUIVO_DO_JOGO.c
+    audio/tema_calmo.mp3        (musica de fundo; opcional)
+    .vscode/tasks.json          (atalho de compilacao; veja o item 4)
+
+  - A pasta "audio" deve ter o nome em minusculo e o arquivo deve se
+    chamar exatamente "tema_calmo.mp3".
+  - Se nao houver musica, o jogo roda normalmente, so que sem som.
+  - Se a pasta ".vscode" nao veio no clone, crie-a e copie para dentro dela
+    o arquivo "tasks.json" do item 4.1.
+
+
+==============================================================================
+ 4. OPCAO A -- RODAR PELO VS CODE
+==============================================================================
+
+Em todos os metodos abaixo, o arquivo Fatoramento.c precisa estar ABERTO
+e selecionado na aba do editor. O VS Code compila o arquivo da aba ativa.
+Se estiver aberto outro arquivo .c, ele compila esse outro.
+
+---- 4.1 Metodo recomendado: atalho Ctrl+Shift+B -------------------------
+
+Garanta que o arquivo ".vscode/tasks.json" tem este conteudo:
+
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compilar",
+      "type": "shell",
+      "command": "gcc",
+      "args": [
+        "${file}",
+        "-o", "${fileDirname}/${fileBasenameNoExtension}",
+        "-lSDL2", "-lSDL2_ttf", "-lSDL2_mixer", "-lm"
+      ],
+      "windows": {
+        "args": [
+          "${file}",
+          "-o", "${fileDirname}\\${fileBasenameNoExtension}.exe",
+          "-lmingw32", "-lSDL2main", "-lSDL2", "-lSDL2_ttf", "-lSDL2_mixer", "-lm"
+        ]
+      },
+      "options": { "cwd": "${fileDirname}" },
+      "problemMatcher": ["$gcc"],
+      "group": "build"
+    },
+    {
+      "label": "compilar e rodar",
+      "type": "shell",
+      "command": "./${fileBasenameNoExtension}",
+      "windows": {
+        "command": ".\\${fileBasenameNoExtension}.exe"
+      },
+      "options": { "cwd": "${fileDirname}" },
+      "dependsOn": "compilar",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    }
+  ]
+}
+
+Para usar:
+    1. Abra ARQUIVO_DO_JOGO.c no editor.
+    2. Aperte Ctrl+Shift+B.
+    3. Ele compila e abre o jogo. Se houver erro de compilacao, ele aparece
+       na aba "Problemas" (parte de baixo do VS Code).
+
+Sem o atalho: menu Terminal > Executar Tarefa de Build.
+
+---- 4.2 Pelo botao de "executar" (triangulo no canto superior direito) ---
+
+O triangulo no canto superior direito do editor (com a setinha ao lado) e
+o botao "Run C/C++ File" da extensao C/C++. Ele roda o arquivo que esta
+aberto na aba.
+
+IMPORTANTE: por padrao esse botao compila SEM as bibliotecas do SDL2, entao
+o jogo falha com erros de "undefined reference" ate voce configurar as
+bibliotecas. Para configurar:
+
+    1. Abra Fatoramento.c e clique no triangulo.
+    2. Na lista que aparecer, escolha o compilador gcc
+       (algo como "C/C++: gcc.exe build and debug active file").
+       Isso cria ou atualiza o arquivo ".vscode/tasks.json".
+    3. Abra o ".vscode/tasks.json", encontre a tarefa criada
+       (label "C/C++: gcc.exe build active file") e adicione, na lista
+       "args", estas bibliotecas logo ANTES do "-o":
+
+         "-lmingw32", "-lSDL2main", "-lSDL2", "-lSDL2_ttf", "-lSDL2_mixer", "-lm",
+
+    4. Salve e clique no triangulo de novo.
+
+Os nomes exatos das opcoes e das telas podem variar conforme a versao da
+extensao. Se o botao nao funcionar, use o metodo 4.1 (Ctrl+Shift+B), que
+e mais confiavel. Se o jogo abrir mas ficar sem musica, e porque ele foi
+executado fora da pasta do jogo: use o metodo 4.1 ou 4.3.
+
+---- 4.3 Pelo terminal do proprio VS Code -------------------------------
+
+    1. Menu Terminal > Novo Terminal (atalho Ctrl+").
+    2. Confira que o terminal esta na pasta do jogo (ele mostra o caminho).
+       Se nao estiver:    cd PASTA_DO_JOGO
+    3. Compile:
+
+         gcc ARQUIVO_DO_JOGO.c -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lm -o ARQUIVO_DO_JOGO.exe
+
+       Se voltar direto ao prompt, sem mensagem, a compilacao deu certo.
+    4. Rode:
+
+         .\ARQUIVO_DO_JOGO.exe
+
+
+==============================================================================
+ 5. OPCAO B -- GERAR O .EXE E RODAR EM OUTRA JANELA
+==============================================================================
+
+Nesta opcao voce gera o executavel uma vez e depois abre o jogo sem precisar
+do VS Code.
+
+---- 5.1 Gerar o .exe ----------------------------------------------------
+
+Abra um terminal na pasta do jogo. Pode ser o cmd:
+
+    1. Abra a pasta do jogo no Explorador de Arquivos.
+    2. Clique na barra de endereco, digite "cmd" e aperte Enter.
+       (O cmd abre ja dentro da pasta.)
+
+Compile:
+
+    gcc ARQUIVO_DO_JOGO.c -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lm -o ARQUIVO_DO_JOGO.exe
+
+O arquivo ARQUIVO_DO_JOGO.exe aparece na mesma pasta.
+
+Se aparecer "SDL2/SDL.h: No such file or directory", o Windows esta usando
+outro compilador. Compile informando os caminhos:
+
+    gcc ARQUIVO_DO_JOGO.c -I C:\msys64\ucrt64\include -L C:\msys64\ucrt64\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lm -o ARQUIVO_DO_JOGO.exe
+
+---- 5.2 Rodar em outra janela -------------------------------------------
+
+Metodo 1 -- duplo clique:
+    Abra a pasta do jogo no Explorador de Arquivos e de dois cliques em
+    ARQUIVO_DO_JOGO.exe. Isso funciona se o C:\msys64\ucrt64\bin estiver no
+    PATH (item 1.4), pois e de la que o jogo pega as bibliotecas (DLLs).
+    A pasta "audio" precisa estar ao lado do .exe.
+
+Metodo 2 -- por um terminal separado:
+    1. Abra o cmd (ou PowerShell) fora do VS Code.
+    2. Va ate a pasta do jogo:
+
+         cd CAMINHO_COMPLETO_DA_PASTA_DO_JOGO
+
+       Exemplo:  cd C:\Users\SEU_USUARIO\Documents\decifra.ai\C
+    3. Rode:
+
+         ARQUIVO_DO_JOGO.exe
+
+Se aparecer uma janela de erro dizendo que "SDL2.dll nao foi encontrada",
+o PATH nao esta configurado: faca o item 1.4, ou copie as DLLs para a pasta
+do .exe (item 6).
+
+Importante: nao envie o .exe para o repositorio. Ele e gerado na sua maquina
+(inclua "*.exe" no arquivo .gitignore).
+
+
+==============================================================================
+ 6. LEVAR O .EXE PARA UM COMPUTADOR SEM NADA INSTALADO
+==============================================================================
+
+Para o jogo abrir em um computador sem MSYS2, o .exe precisa das DLLs ao
+lado dele.
+
+    1. Gere o .exe (item 5.1).
+    2. Abra o "MSYS2 UCRT64" e va ate a pasta do .exe. Exemplo:
+
+         cd /c/Users/SEU_USUARIO/Documents/decifra.ai/C
+
+       Dica: o disco C: fica em /c/ e as barras sao normais (/). Use "ls"
+       para ver o conteudo e navegar passo a passo. Se a pasta estiver no
+       OneDrive, o nome pode ser "Documentos" em vez de "Documents".
+    3. Copie todas as DLLs necessarias de uma vez:
+
+         ldd ARQUIVO_DO_JOGO.exe | grep ucrt64 | awk '{print $3}' | xargs -I{} cp {} .
+
+    4. Copie para um pendrive ou envie a pasta inteira com:
+
+         ARQUIVO_DO_JOGO.exe
+         todas as arquivos .dll que foram copiados
+         audio/tema_calmo.mp3
+
+    5. No outro computador, de dois cliques no .exe.
+
+
+==============================================================================
+ 7. PROBLEMAS COMUNS
+==============================================================================
+
+"gcc" nao e reconhecido / "gcc: command not found"
+    O compilador nao esta no PATH, ou o terminal foi aberto antes de
+    configurar. Faca o item 1.4 e abra um terminal NOVO.
+
+"SDL2/SDL.h: No such file or directory"
+    O computador tem outro compilador na frente do ucrt64. Rode
+    "where gcc": o primeiro resultado precisa ser
+    C:\msys64\ucrt64\bin\gcc.exe. Ou use a compilacao com -I e -L do
+    item 5.1.
+
+"No such file or directory" ao compilar o arquivo
+    O nome no comando nao bate com o nome real do arquivo, ou o terminal
+    esta na pasta errada. Use "dir *.c" para ver os nomes e "cd" para
+    mostrar a pasta atual.
+
+"'.\ARQUIVO.exe' is not recognized"
+    O .exe nao existe porque a compilacao falhou. Corrija o erro de
+    compilacao antes.
+
+O VS Code compila outro programa
+    O botao e o atalho compilam o arquivo da aba ativa. Clique na aba do
+    arquivo do jogo antes.
+
+Atalho Ctrl+Shift+B nao faz nada / pede para configurar tarefa
+    A pasta ".vscode/tasks.json" nao esta na pasta aberta no VS Code. Abra
+    a pasta certa (item 2) ou crie o arquivo (item 4.1).
+
+O jogo abre, mas sem musica
+    Confira se existe a pasta "audio" (minuscula) ao lado do .exe e se o
+    arquivo se chama exatamente "tema_calmo.mp3" (e nao
+    "tema_calmo.mp3.mp3"; no Explorador, ative Exibir > Mostrar >
+    Extensoes de nomes de arquivos para ver). Execute o jogo de dentro da
+    pasta dele.
+
+A janela abre e fecha na hora
+    Rode o .exe por um terminal (item 5.2, metodo 2) para ver a mensagem de
+    erro. Uma causa comum e nao encontrar a fonte do Windows.
+
+
+==============================================================================
+ 8. OBSERVACAO PARA LINUX
+==============================================================================
+
+No Linux o processo e o mesmo, com estas diferencas:
+
+  Instalar as ferramentas (Ubuntu/Debian):
+    sudo apt update
+    sudo apt install git build-essential libsdl2-dev libsdl2-ttf-dev libsdl2-mixer-dev fonts-dejavu-core
+
+  Compilar:
+    gcc ARQUIVO_DO_JOGO.c -o ARQUIVO_DO_JOGO -lSDL2 -lSDL2_ttf -lSDL2_mixer -lm
+
+  Rodar (dentro da pasta do jogo):
+    ./ARQUIVO_DO_JOGO
+
+  - Nao se usa -lmingw32 nem -lSDL2main (so existem no Windows).
+  - O executavel nao tem extensao .exe.
+  - O Ctrl+Shift+B do item 4.1 funciona igual: o "tasks.json" ja trata
+    Windows e Linux.
+  - Em Fedora e Arch, o jogo precisa de um ajuste no caminho da fonte;
+    veja o guia de instalacao completo (GUIA_DECIFRA_IA_WINDOWS_LINUX.txt).
+
+==============================================================================
+ FIM DO GUIA
+==============================================================================
