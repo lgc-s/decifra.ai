@@ -102,7 +102,9 @@ O design do jogo é guiado por dois perfis-alvo principais:
 - Sem engine gráfica nem multiplayer/rede — experiência 100% baseada em terminal
 
 ---
-
+## Como Instalar e Rodar
+📖 [Acesse o Guia Passo a Passo de Clonagem e Execução](./C/como%20fazer%20o%20c%C3%B3digo%20rodar/PASSO_A_PASSO_CLONAR_E_RODAR.txt)
+--- 
 ## Diagramas de Atividades
 
 📊 [Ver diagramas de atividades de cada história de usuário](./diagrama-atividades.pdf)
