@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compilar",
+      "type": "shell",
+      "command": "gcc",
+      "args": [
+        "${file}",
+        "-o", "${fileDirname}/${fileBasenameNoExtension}",
+        "-lSDL2", "-lSDL2_ttf", "-lSDL2_mixer", "-lm"
+      ],
+      "windows": {
+        "args": [
+          "${file}",
+          "-o", "${fileDirname}\\${fileBasenameNoExtension}.exe",
+          "-lmingw32", "-lSDL2main", "-lSDL2", "-lSDL2_ttf", "-lSDL2_mixer", "-lm"
+        ]
+      },
+      "options": { "cwd": "${fileDirname}" },
+      "problemMatcher": ["$gcc"],
+      "group": "build"
+    },
+    {
+      "label": "compilar e rodar",
+      "type": "shell",
+      "command": "./${fileBasenameNoExtension}",
+      "windows": {
+        "command": ".\\${fileBasenameNoExtension}.exe"
+      },
+      "options": { "cwd": "${fileDirname}" },
+      "dependsOn": "compilar",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": []
+    }
+  ]
+}
