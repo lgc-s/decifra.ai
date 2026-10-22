@@ -30,22 +30,28 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 
 ### Progresso Semanal
 
-| Semana | Atividade                    | Responsável  |
-| :---   | :---                         | :---         |
-| 1      | Sem Atividade (Apresentação) | *Nenhum*     |
-| 2-3    | Project Model Canvas         | Nalbert      |
-| 2-3    | Ideação do Projeto           | Todos        |
-| 2-3    | Personas                     | Davi Pereira |
-| 2-3    | Visão e Requsitos            | Luis         |
-| 4-5    | Setup do GitHub              | Luis         |
-| 4-5    | Rascunhos da Tela de Jogo    | João         |
-| 4-5    | Código Inicial               | Kauã Mateus  |
-| 6-7    | Regras formalizadas          | Antônio      |
-| 6-7    | Núcleo jogável em C          | Carlos, Davi |
-| 6-7    | Regras formalizadas          | Antônio      |
-| 6-7    | Backlog                      | João         |
-| 6-7    | Wireframes                   | Nalbert      |
-
+| Semana | Atividade                    | Responsável         | Matéria  |
+| :---   | :---                         | :---                | :---     |
+| 1      | Sem Atividade (Apresentação) | *Nenhum*            |*Nenhum*  |
+| 2-3    | Project Model Canvas         | Nalbert  e Davi P   |   IHC    |
+| 2-3    | Ideação do Projeto           | Todos               |   FP2    |
+| 2-3    | Personas                     | Davi P e Nalbert    |   IHC    |
+| 2-3    | Visão e Requsitos            | Luis e Davi B       |   FDS    |
+| 4-5    | Setup do GitHub              | Luis e Davi B       |   PIF    |
+| 4-5    | Rascunhos da Tela de Jogo    | João e Carlos       |   IHC    |
+| 4-5    | Código Inicial               | Kauã  e Antonio     |   PIF    |
+| 6-7    | Regras formalizadas          | Antônio e Kauã      |   LMC    |
+| 6-7    | Núcleo jogável em C          | Carlos e João       |   PIF    | 
+| 6-7    | Regras formalizadas          | Antônio e Kauã      |   LMC    |
+| 6-7    | Backlog                      | João e Carlos       |   FP2    |
+| 6-7    | Wireframes                   | Nalbert e Davi P    |   FP2    |
+| 8-9    | Entrega u1 PIF               | Carlos e João       |   PIF    |
+| 8-9    | Entrega u1 IHC               | Davi P e Nalbert    |   IHC    |
+| 8-9    | Entrega u1 LMC               | Antonio e Kauã      |   LMC    |
+| 8-9    | Entrega u1  FDS              | Davi B e Luis       |   FDS    |
+| 8-9    | Entrega u1  FP2              | Kauã e Antonio      |   FP2    |
+| 10-11  | Backlog revisado             | João e Carlos       |   FP2    |
+| 10-11  | Evolução do código           | Luis e Davi B       |   PIF    |
 
 ### Estrutura narrativa em atos
 
