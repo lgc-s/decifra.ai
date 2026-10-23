@@ -137,13 +137,12 @@ O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversati
 ## SPRINT1 E BACKLOG
 
 
-<img width="287" height="786" alt="backlog" src="https://github.com/user-attachments/assets/5ae978bf-23c4-4ce0-9d86-7a98be9b0999" 
-  
-  
-## Screencast print 1
-
-https://www.youtube.com/watch?v=LN18BlokvUo&authuser=0/>
+<img width="287" height="786" alt="backlog" src="https://github.com/user-attachments/assets/5ae978bf-23c4-4ce0-9d86-7a98be9b0999"/>
 
 
 <img width="1600" height="508" alt="sprints" src="https://github.com/user-attachments/assets/c018fdfd-5b19-493d-8934-afd76db72780" />
+
+## Screencast Sprint 1
+
+https://www.youtube.com/watch?v=LN18BlokvUo&authuser=0/>
 
