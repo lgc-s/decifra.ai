@@ -1,0 +1,44 @@
+name: Gerar jogo para Windows
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-SDL2
+            mingw-w64-ucrt-x86_64-SDL2_ttf
+            mingw-w64-ucrt-x86_64-SDL2_mixer
+
+      - name: Compilar
+        working-directory: C
+        run: |
+          gcc Fatoramento.c -o DecifraIA.exe -mwindows \
+            -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lm
+
+      - name: Montar a pasta do jogo
+        working-directory: C
+        run: |
+          mkdir -p ../dist/DecifraIA
+          cp DecifraIA.exe ../dist/DecifraIA/
+          cp -r audio ../dist/DecifraIA/
+          ldd DecifraIA.exe | grep ucrt64 | awk '{print $3}' | xargs -I{} cp {} ../dist/DecifraIA/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DecifraIA-Windows
+          path: dist/DecifraIA
