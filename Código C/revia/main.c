@@ -26,6 +26,8 @@
 #define SAVE_FILE "save_slot1.dat"
 #define CERT_FILE "certificado_conclusao.txt"
 #define SAVE_MAGIC 0x52455631
+#define PERSO_N 4           /* GP01: personagens disponíveis na tela de escolha */
+#define PERSO_T_CONFIRMA 1.5f /* GP01: duração da transição após confirmar */
 
 static const Color VERDE   = {0, 255, 136, 255};
 static const Color VERDE_E = {0, 110, 70, 255};
@@ -38,7 +40,8 @@ static const Color CINZA   = {110, 130, 125, 255};
 
 typedef enum {
     ST_MENU, ST_CONFIG, ST_AUDIO, ST_CRED, ST_INTRO, ST_PLAY, ST_DLG,
-    ST_QUIZ, ST_LOCK, ST_NOTE, ST_PAUSE, ST_CRISE, ST_FIM
+    ST_QUIZ, ST_LOCK, ST_NOTE, ST_PAUSE, ST_CRISE, ST_FIM,
+    ST_PERSO                                  /* GP01: criar/escolher personagem */
 } Estado;
 
 typedef enum { K_QUIZ, K_CIDADAO, K_EVID, K_LOCK, K_CRISE } TipoObj;
@@ -77,6 +80,7 @@ typedef struct {
     int magic, conf, pts, found[EV_N], chEst[CH_N];
     int quizFeito, lockAberto, tut, acertos, erros, qCursor, concluido, quizTempo;
     float tempo, px, py;
+    int perso;                    /* GP01: índice do personagem escolhido */
 } Save;
 
 typedef struct {
@@ -122,6 +126,9 @@ typedef struct {
     int criseDC, criseDP;
     const char *criseTxt;
     float tutT;
+    /* GP01: personagem */
+    int perso, persoSel, persoOk;
+    float persoT;
 } Jogo;
 
 /* ------------------------------------------------------------------ */
@@ -271,6 +278,50 @@ static int lkAvalia(int d, const int *v)
 static float clampf(float v, float a, float b) { return v < a ? a : (v > b ? b : v); }
 static int clampi(int v, int a, int b) { return v < a ? a : (v > b ? b : v); }
 
+/* ------------------------------------------------------------------ */
+/* GP01 - Personagem: dados e sprite desenhado com retângulos          */
+/* ------------------------------------------------------------------ */
+typedef struct {
+    const char *nome;
+    Color camisa, cabelo;
+} Personagem;
+
+static const Personagem PERSONAGENS[PERSO_N] = {
+    {"Alex", {  0, 190, 160, 255}, { 70,  45,  30, 255}},   /* camisa verde-água, cabelo castanho */
+    {"Bia",  { 70, 130, 255, 255}, { 20,  20,  28, 255}},   /* camisa azul, cabelo preto */
+    {"Caio", {230,  80, 170, 255}, {190,  70,  30, 255}},   /* camisa magenta, cabelo ruivo */
+    {"Dani", {255, 160,  40, 255}, {235, 200,  90, 255}},   /* camisa laranja, cabelo loiro */
+};
+
+static void RetP(float x, float y, float e, float dx, float dy, float w, float h, Color c)
+{
+    DrawRectangle((int)(x + dx * e), (int)(y + dy * e), (int)(w * e + 0.5f), (int)(h * e + 0.5f), c);
+}
+
+/* Desenha o personagem `idx` com os pés em (x, y). `esc` = escala (1 = tamanho no mundo),
+ * `bob` = balanço vertical do tronco/cabeça (em pixels na escala 1). */
+static void personagem_desenhar(float x, float y, int idx, float bob, float esc)
+{
+    const Personagem *p = &PERSONAGENS[clampi(idx, 0, PERSO_N - 1)];
+    const Color pele = {236, 196, 160, 255}, calca = {40, 52, 78, 255}, cracha = {240, 245, 242, 255};
+    float yb = y + bob * esc;                                       /* parte de cima balança */
+
+    DrawEllipse((int)x, (int)(y + 6 * esc), (int)(10 * esc), (int)(4 * esc), Fade(BLACK, 0.5f));
+    RetP(x, y,  esc, -6,  -6,  5,  6, calca);                       /* pernas */
+    RetP(x, y,  esc,  1,  -6,  5,  6, calca);
+    RetP(x, yb, esc, -7, -18, 14, 12, p->camisa);                   /* tronco */
+    RetP(x, yb, esc, -9, -17,  2,  8, pele);                        /* braços */
+    RetP(x, yb, esc,  7, -17,  2,  8, pele);
+    RetP(x, yb, esc,  2, -15,  4,  5, cracha);                      /* crachá */
+    RetP(x, yb, esc,  2, -15,  4,  1, VERDE);
+    RetP(x, yb, esc, -5, -28, 10, 10, pele);                        /* cabeça */
+    RetP(x, yb, esc, -3, -24,  2,  2, FUNDO);                       /* olhos */
+    RetP(x, yb, esc,  1, -24,  2,  2, FUNDO);
+    RetP(x, yb, esc, -6, -30, 12,  4, p->cabelo);                   /* cabelo */
+    RetP(x, yb, esc, -6, -30,  2,  7, p->cabelo);
+    RetP(x, yb, esc,  4, -30,  2,  7, p->cabelo);
+}
+
 static Vector2 MouseV(void)
 {
     float sw = (float)GetScreenWidth(), sh = (float)GetScreenHeight();
@@ -406,6 +457,7 @@ static void Salvar(Jogo *g, int concluido)
     s.acertos = g->acertos; s.erros = g->erros; s.qCursor = g->qCursor;
     s.concluido = concluido; s.quizTempo = g->quizTempo; s.tempo = g->tempo;
     s.px = g->pos.x; s.py = g->pos.y;
+    s.perso = g->perso;
     FILE *f = fopen(SAVE_FILE, "wb");
     if (!f) return;
     fwrite(&s, sizeof s, 1, f);
@@ -425,6 +477,7 @@ static int ChecaSave(Save *s)
     if (s->conf < 0 || s->conf > 100 || s->pts < 0 || s->tut < 0 || s->tut > 6) return 2;
     if (s->qCursor < 0 || s->qCursor >= PQ_N) return 2;
     if (s->px < 0 || s->px > WW || s->py < 0 || s->py > H) return 2;
+    if (s->perso < 0 || s->perso >= PERSO_N) return 2;
     for (int i = 0; i < EV_N; i++) if (s->found[i] != 0 && s->found[i] != 1) return 2;
     for (int i = 0; i < CH_N; i++) if (s->chEst[i] < 0 || s->chEst[i] > CH_IGNORADO) return 2;
     return 1;
@@ -441,6 +494,7 @@ static void NovoJogo(Jogo *g)
     g->tut = 0; g->tutAtivo = 1; g->acertos = 0; g->erros = 0; g->tempo = 0;
     g->pos = (Vector2){120, 400}; g->distAndada = 0; g->msgT = 0;
     g->criseSel = 0; g->criseRes = 0; g->nbSel = 0; g->tutT = 0; g->certOk = 0;
+    g->perso = 0; g->persoSel = 0; g->persoOk = 0; g->persoT = 0;
 }
 
 static void CarregaJogo(Jogo *g, const Save *s)
@@ -453,6 +507,7 @@ static void CarregaJogo(Jogo *g, const Save *s)
     g->tutAtivo = s->tut <= 5; g->acertos = s->acertos; g->erros = s->erros;
     g->qCursor = s->qCursor; g->quizTempo = s->quizTempo ? s->quizTempo : 15;
     g->tempo = s->tempo; g->pos = (Vector2){s->px, s->py};
+    g->perso = s->perso; g->persoSel = s->perso;
 }
 
 static void EmbaralhaPerguntas(Jogo *g)
@@ -741,6 +796,40 @@ static void EntraPausa(Jogo *g)
 }
 
 /* ------------------------------------------------------------------ */
+/* GP01 - Tela de criação/escolha de personagem                        */
+/* ------------------------------------------------------------------ */
+static Rectangle PersoCard(int i) { return (Rectangle){55 + i * 220.0f, 130, 190, 250}; }
+
+static void personagem_confirmar(Jogo *g)
+{
+    g->perso = g->persoSel;
+    g->persoOk = 1;
+    g->persoT = 0;
+    Sfx(g, g->sOk);
+}
+
+static void tela_personagem_update(Jogo *g, float dt)
+{
+    if (g->persoOk) {                                  /* transição de 1,5 s após confirmar */
+        g->persoT += dt;
+        if (g->persoT >= PERSO_T_CONFIRMA) {
+            g->persoOk = 0;
+            g->introPg = 0; g->introRev = 0; g->estado = ST_INTRO;   /* cena de abertura -> mundo */
+        }
+        return;
+    }
+    if (Esq()) { g->persoSel = (g->persoSel + PERSO_N - 1) % PERSO_N; Sfx(g, g->sClick); }
+    if (Dir()) { g->persoSel = (g->persoSel + 1) % PERSO_N; Sfx(g, g->sClick); }
+    for (int i = 0; i < PERSO_N; i++) {                /* mouse: 1º clique seleciona, 2º confirma */
+        if (!Clique(PersoCard(i))) continue;
+        if (i == g->persoSel) { personagem_confirmar(g); return; }
+        g->persoSel = i; Sfx(g, g->sClick);
+    }
+    if (Confirma()) { personagem_confirmar(g); return; }
+    if (Voltar()) g->estado = ST_MENU;
+}
+
+/* ------------------------------------------------------------------ */
 /* Menu principal, configurações, áudio, créditos e introdução         */
 /* ------------------------------------------------------------------ */
 static int MenuItens(const Jogo *g, int *ids)
@@ -757,7 +846,7 @@ static void MenuAtiva(Jogo *g, int id)
     switch (id) {
     case M_INI:
         IniciarNovo(g);
-        g->introPg = 0; g->introRev = 0; g->estado = ST_INTRO;
+        g->persoSel = 0; g->persoOk = 0; g->persoT = 0; g->estado = ST_PERSO;
         break;
     case M_CONT: {
         Save s;
@@ -1230,6 +1319,7 @@ static void Atualiza(Jogo *g, float dt)
     case ST_PAUSE:  AtualizaPausa(g); break;
     case ST_CRISE:  AtualizaCrise(g); break;
     case ST_FIM:    AtualizaFim(g); break;
+    case ST_PERSO:  tela_personagem_update(g, dt); break;
     }
     if (g->estado == ST_PLAY || g->estado == ST_DLG || g->estado == ST_QUIZ ||
         g->estado == ST_LOCK || g->estado == ST_NOTE)
@@ -1323,12 +1413,7 @@ static void DesenhaObjeto(const Jogo *g, int i)
 static void DesenhaJogador(const Jogo *g)
 {
     float bob = sinf(g->anim) * 2.0f;
-    int x = (int)g->pos.x, y = (int)g->pos.y;
-    DrawEllipse(x, y + 6, 10, 4, Fade(BLACK, 0.5f));
-    DrawRectangle(x - 7, (int)(y - 18 + bob), 14, 18, VERDE);
-    DrawRectangleLines(x - 7, (int)(y - 18 + bob), 14, 18, VERDE_E);
-    DrawCircle(x, (int)(y - 24 + bob), 7, TEXTO);
-    DrawRectangle(x - 4, (int)(y - 26 + bob), 8, 3, FUNDO);
+    personagem_desenhar(g->pos.x, g->pos.y, g->perso, bob, 1.0f);
 }
 
 static void DesenhaMundo(const Jogo *g)
@@ -1815,6 +1900,37 @@ static void DesenhaFim(const Jogo *g)
     for (int i = 0; i < 3; i++) Botao((Rectangle){330, 400 + i * 44.0f, 300, 38}, IT[i], i == g->pauseSel, 1);
 }
 
+static void DesenhaPerso(const Jogo *g)
+{
+    FundoTech();
+    TextoCentro("ESCOLHA SEU PERSONAGEM", W / 2, 44, 36, VERDE);
+    TextoCentro("Quem vai auditar a NÓVA?", W / 2, 92, 18, CINZA);
+    float t = (float)GetTime();
+    for (int i = 0; i < PERSO_N; i++) {
+        Rectangle r = PersoCard(i);
+        int sel = (i == g->persoSel);
+        Painel(r, VERDE_E);
+        personagem_desenhar(r.x + r.width / 2, r.y + 150, i, sel ? sinf(t * 4.0f) * 2.0f : 0.0f, 4.0f);
+        TextoCentro(PERSONAGENS[i].nome, (int)(r.x + r.width / 2), (int)r.y + 192, 24, sel ? TEXTO : CINZA);
+        if (sel) {                                       /* borda neon com brilho */
+            for (int k = 1; k <= 3; k++)
+                DrawRectangleLinesEx((Rectangle){r.x - k * 3, r.y - k * 3, r.width + k * 6, r.height + k * 6},
+                                     2, Fade(VERDE, 0.30f / k));
+            DrawRectangleLinesEx(r, 3, VERDE);
+        } else {
+            DrawRectangleRec(r, Fade(BLACK, 0.55f));     /* demais cartões escurecem */
+        }
+    }
+    TextoCentro("Setas ou A/D trocam   |   ENTER confirma   |   ESC volta", W / 2, 420, 16, CINZA);
+    if (g->persoOk) {
+        float a = clampf(g->persoT / PERSO_T_CONFIRMA, 0, 1);
+        DrawRectangle(0, 0, W, H, Fade(BLACK, a * a * 0.9f));
+        Rectangle m = {W / 2.0f - 230, H / 2.0f - 28, 460, 56};
+        Painel(m, VERDE);
+        TextoCentro(TextFormat("%s confirmado(a)!", PERSONAGENS[g->perso].nome), W / 2, (int)m.y + 15, 26, VERDE);
+    }
+}
+
 static void DesenhaTela(const Jogo *g, Estado e)
 {
     switch (e) {
@@ -1831,6 +1947,7 @@ static void DesenhaTela(const Jogo *g, Estado e)
     case ST_CRISE:  DesenhaPlay(g); DesenhaCrise(g); break;
     case ST_PAUSE:  DesenhaTela(g, g->volta); DesenhaPausa(g); break;
     case ST_FIM:    DesenhaFim(g); break;
+    case ST_PERSO:  DesenhaPerso(g); break;
     }
 }
 
@@ -1899,4 +2016,4 @@ int main(void)
     CloseAudioDevice();
     CloseWindow();
     return 0;
-}
+}
