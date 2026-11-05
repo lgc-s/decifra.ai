@@ -20,7 +20,7 @@
 #define WW 1900             /* largura do mundo (câmera acompanha o jogador) */
 #define EV_N 4              /* total de evidências */
 #define CH_N 2              /* total de chamados */
-#define PQ_N 14             /* perguntas no banco */
+#define PQ_N 13             /* GP06: exatamente 13 perguntas no banco */
 #define QN 5                /* perguntas por sessão de quiz */
 #define LK_N 3              /* desafios do cadeado lógico */
 #define SAVE_FILE "save_slot1.dat"
@@ -132,7 +132,7 @@ typedef struct {
 } Jogo;
 
 /* ------------------------------------------------------------------ */
-/* Banco de perguntas (separado da lógica de apresentação)             */
+/* Banco de perguntas (Exatamente 13 perguntas - GP06)                 */
 /* ------------------------------------------------------------------ */
 static const Pergunta PERGUNTAS[PQ_N] = {
     {"O que é um algoritmo?",
@@ -141,27 +141,27 @@ static const Pergunta PERGUNTAS[PQ_N] = {
      "Pense em uma receita de bolo.", 1},
     {"Um modelo acerta 99% dos dados de treino, mas erra quase metade dos dados novos. Isso é chamado de:",
      {"Overfitting", "Viés de dados", "Falta de interpretabilidade"}, 0,
-     "O modelo memorizou padrões específicos dos dados de treino e não consegue generalizar para dados novos: é o overfitting.",
+     "O modelo decorou o treino em vez de aprender a generalizar para novos dados.",
      "Ele decorou a prova em vez de aprender a matéria.", 2},
     {"Um filtro antifraude bloqueia uma compra legítima. Esse erro é um:",
      {"Verdadeiro positivo", "Falso positivo", "Falso negativo"}, 1,
-     "Falso positivo: o sistema diz 'fraude' quando não era. Falso negativo seria deixar passar uma fraude real.",
+     "Falso positivo: o sistema diz 'fraude' quando não era.",
      "O sistema disse 'sim' quando a resposta era 'não'.", 1},
     {"Um exame automatizado não detecta uma doença que o paciente realmente tem. Esse erro é um:",
      {"Falso positivo", "Verdadeiro negativo", "Falso negativo"}, 2,
-     "Falso negativo: o sistema diz 'não há doença' quando há. Em saúde, esse erro pode ter consequências graves.",
+     "Falso negativo: o sistema diz 'não há doença' quando há. Em saúde, pode ser grave.",
      "O sistema disse 'não' quando a resposta era 'sim'.", 2},
     {"Dados históricos de crédito refletem discriminação do passado. O que pode acontecer ao treinar um modelo com eles?",
      {"O modelo corrige a discriminação sozinho", "O modelo pode reproduzir e ampliar a discriminação", "Nada, pois algoritmos são neutros"}, 1,
-     "Modelos aprendem padrões dos dados. Se os dados carregam viés, o modelo tende a reproduzi-lo, mesmo sem intenção.",
+     "Modelos aprendem padrões dos dados. Se os dados carregam viés, o modelo tende a reproduzi-lo.",
      "O modelo aprende com o que recebe.", 2},
     {"Vendas de sorvete e afogamentos sobem juntos no verão. A conclusão mais adequada é:",
      {"Sorvete causa afogamentos", "Há correlação, provavelmente explicada por um fator comum (calor)", "Afogamentos aumentam as vendas de sorvete"}, 1,
-     "Correlação não implica causalidade. O calor leva mais gente à praia e ao sorvete, criando a associação.",
+     "Correlação não implica causalidade. O calor leva mais gente à praia e ao sorvete.",
      "Existe um terceiro fator por trás dos dois.", 2},
     {"Qual prática reduz riscos de privacidade ao treinar um modelo?",
      {"Coletar o máximo possível de dados pessoais", "Minimizar e anonimizar os dados coletados", "Publicar a base bruta para todos"}, 1,
-     "Coletar só o necessário (minimização) e anonimizar reduz o risco de vazamento e de identificação das pessoas.",
+     "Coletar só o necessário (minimização) e anonimizar reduz o risco de vazamento.",
      "Quanto menos dado pessoal exposto, melhor.", 2},
     {"Para que serve a explicabilidade em um sistema de IA?",
      {"Deixar o sistema mais rápido", "Permitir entender por que o sistema chegou a uma decisão", "Esconder os dados de treino"}, 1,
@@ -173,24 +173,20 @@ static const Pergunta PERGUNTAS[PQ_N] = {
      "Sistemas não assumem responsabilidades.", 2},
     {"Um modelo para uma doença rara (1% dos casos) responde sempre 'saudável' e tem 99% de acurácia. O que isso mostra?",
      {"Que o modelo é perfeito", "Que acurácia sozinha pode enganar quando as classes são desbalanceadas", "Que faltam dados de privacidade"}, 1,
-     "Com classes desbalanceadas, é preciso olhar também sensibilidade, precisão e falsos negativos.",
+     "Com classes desbalanceadas, é preciso olhar sensibilidade, precisão e falsos negativos.",
      "Ele nunca acerta um único doente.", 3},
     {"Qual conjunto de dados tende a produzir o pior modelo?",
      {"Representativo e atualizado", "Incompleto, desatualizado e com rótulos errados", "Diversificado e revisado"}, 1,
-     "A qualidade dos dados limita a qualidade do modelo: dados ruins geram decisões ruins ('lixo entra, lixo sai').",
+     "A qualidade dos dados limita a qualidade do modelo ('lixo entra, lixo sai').",
      "Lixo entra, lixo sai.", 1},
     {"O que significa o direito à revisão humana de decisões automatizadas?",
      {"Uma pessoa pode pedir que um humano reavalie a decisão", "Humanos precisam programar tudo do zero", "Só empresas podem pedir revisão"}, 0,
-     "Quem é afetado por uma decisão automatizada pode solicitar revisão por uma pessoa, em vez de aceitar uma resposta definitiva.",
+     "Quem é afetado por uma decisão automatizada pode solicitar revisão por uma pessoa.",
      "Existe sempre um recurso a uma pessoa.", 2},
     {"Um assistente de IA cita com confiança uma lei que não existe. Esse fenômeno é chamado de:",
      {"Criptografia", "Alucinação", "Overfitting de hardware"}, 1,
-     "Alucinação é quando o modelo gera conteúdo plausível, porém falso. Por isso é preciso verificar as fontes.",
+     "Alucinação é quando o modelo gera conteúdo plausível, porém falso.",
      "Soa convincente, mas é inventado.", 2},
-    {"Dois modelos têm acurácia parecida, mas um erra muito mais com um grupo específico de pessoas. O que fazer?",
-     {"Ignorar, pois a acurácia média é a mesma", "Auditar o desempenho por grupo e investigar a causa", "Esconder o resultado para não gerar desconfiança"}, 1,
-     "Média alta pode esconder desigualdades. Auditar por grupo é essencial para detectar viés e corrigi-lo com transparência.",
-     "Médias escondem diferenças.", 3},
 };
 
 /* ------------------------------------------------------------------ */
@@ -254,7 +250,7 @@ static const Rectangle SOLIDOS[] = {
 #define SOL_N ((int)(sizeof(SOLIDOS) / sizeof(SOLIDOS[0])))
 static const Rectangle BARREIRA = {1240, 150, 20, 380};
 
-/* Desafios do Cadeado Lógico: a lógica é calculada de verdade em C */
+/* Desafios do Cadeado Lógico */
 static const char *LK_EXPR[LK_N] = {
     "(A AND B) OR (NOT C)",
     "(A OR B) AND NOT (B AND C)",
@@ -287,10 +283,10 @@ typedef struct {
 } Personagem;
 
 static const Personagem PERSONAGENS[PERSO_N] = {
-    {"Alex", {  0, 190, 160, 255}, { 70,  45,  30, 255}},   /* camisa verde-água, cabelo castanho */
-    {"Bia",  { 70, 130, 255, 255}, { 20,  20,  28, 255}},   /* camisa azul, cabelo preto */
-    {"Caio", {230,  80, 170, 255}, {190,  70,  30, 255}},   /* camisa magenta, cabelo ruivo */
-    {"Dani", {255, 160,  40, 255}, {235, 200,  90, 255}},   /* camisa laranja, cabelo loiro */
+    {"Alex", {  0, 190, 160, 255}, { 70,  45,  30, 255}},
+    {"Bia",  { 70, 130, 255, 255}, { 20,  20,  28, 255}},
+    {"Caio", {230,  80, 170, 255}, {190,  70,  30, 255}},
+    {"Dani", {255, 160,  40, 255}, {235, 200,  90, 255}},
 };
 
 static void RetP(float x, float y, float e, float dx, float dy, float w, float h, Color c)
@@ -298,26 +294,24 @@ static void RetP(float x, float y, float e, float dx, float dy, float w, float h
     DrawRectangle((int)(x + dx * e), (int)(y + dy * e), (int)(w * e + 0.5f), (int)(h * e + 0.5f), c);
 }
 
-/* Desenha o personagem `idx` com os pés em (x, y). `esc` = escala (1 = tamanho no mundo),
- * `bob` = balanço vertical do tronco/cabeça (em pixels na escala 1). */
 static void personagem_desenhar(float x, float y, int idx, float bob, float esc)
 {
     const Personagem *p = &PERSONAGENS[clampi(idx, 0, PERSO_N - 1)];
     const Color pele = {236, 196, 160, 255}, calca = {40, 52, 78, 255}, cracha = {240, 245, 242, 255};
-    float yb = y + bob * esc;                                       /* parte de cima balança */
+    float yb = y + bob * esc;
 
     DrawEllipse((int)x, (int)(y + 6 * esc), (int)(10 * esc), (int)(4 * esc), Fade(BLACK, 0.5f));
-    RetP(x, y,  esc, -6,  -6,  5,  6, calca);                       /* pernas */
+    RetP(x, y,  esc, -6,  -6,  5,  6, calca);
     RetP(x, y,  esc,  1,  -6,  5,  6, calca);
-    RetP(x, yb, esc, -7, -18, 14, 12, p->camisa);                   /* tronco */
-    RetP(x, yb, esc, -9, -17,  2,  8, pele);                        /* braços */
+    RetP(x, yb, esc, -7, -18, 14, 12, p->camisa);
+    RetP(x, yb, esc, -9, -17,  2,  8, pele);
     RetP(x, yb, esc,  7, -17,  2,  8, pele);
-    RetP(x, yb, esc,  2, -15,  4,  5, cracha);                      /* crachá */
+    RetP(x, yb, esc,  2, -15,  4,  5, cracha);
     RetP(x, yb, esc,  2, -15,  4,  1, VERDE);
-    RetP(x, yb, esc, -5, -28, 10, 10, pele);                        /* cabeça */
-    RetP(x, yb, esc, -3, -24,  2,  2, FUNDO);                       /* olhos */
+    RetP(x, yb, esc, -5, -28, 10, 10, pele);
+    RetP(x, yb, esc, -3, -24,  2,  2, FUNDO);
     RetP(x, yb, esc,  1, -24,  2,  2, FUNDO);
-    RetP(x, yb, esc, -6, -30, 12,  4, p->cabelo);                   /* cabelo */
+    RetP(x, yb, esc, -6, -30, 12,  4, p->cabelo);
     RetP(x, yb, esc, -6, -30,  2,  7, p->cabelo);
     RetP(x, yb, esc,  4, -30,  2,  7, p->cabelo);
 }
@@ -338,7 +332,6 @@ static void TextoCentro(const char *t, int cx, int y, int sz, Color c)
     DrawText(t, cx - MeasureText(t, sz) / 2, y, sz, c);
 }
 
-/* Quebra automática de linha. Retorna o y final. */
 static int TextoQuebra(const char *t, int x, int y, int w, int sz, Color c)
 {
     char linha[640] = "", teste[640], palavra[64];
@@ -389,7 +382,6 @@ static void Sfx(Jogo *g, Sound s)
     PlaySound(s);
 }
 
-/* Gera um tom senoidal em memória (sem arquivos externos) */
 static Sound Tom(float f0, float f1, float dur, float vol, float f2)
 {
     const int sr = 22050;
@@ -423,7 +415,6 @@ static void MudaConf(Jogo *g, int d)
 
 static void GanhaPts(Jogo *g, int d) { g->pts += d; if (g->pts < 0) g->pts = 0; }
 
-/* Avança o tutorial. Tolerante: se o jogador fez a ação fora de ordem, o passo é pulado. */
 static void TutAvanca(Jogo *g, int passo)
 {
     if (g->tutAtivo && g->tut <= passo) g->tut = passo + 1;
@@ -465,7 +456,6 @@ static void Salvar(Jogo *g, int concluido)
     g->temSave = !concluido;
 }
 
-/* Valida o arquivo de save: 0 = não existe, 1 = válido, 2 = inválido/corrompido, 3 = campanha concluída */
 static int ChecaSave(Save *s)
 {
     FILE *f = fopen(SAVE_FILE, "rb");
@@ -505,12 +495,15 @@ static void CarregaJogo(Jogo *g, const Save *s)
     memcpy(g->chEst, s->chEst, sizeof g->chEst);
     g->quizFeito = s->quizFeito; g->lockAberto = s->lockAberto; g->tut = s->tut;
     g->tutAtivo = s->tut <= 5; g->acertos = s->acertos; g->erros = s->erros;
-    g->qCursor = s->qCursor; g->quizTempo = s->quizTempo ? s->quizTempo : 15;
+    g->qCursor = s->qCursor; g->quizTempo = s->quizTempo ? s->quizTempo : 30;
     g->tempo = s->tempo; g->pos = (Vector2){s->px, s->py};
     g->perso = s->perso; g->persoSel = s->perso;
 }
 
-static void EmbaralhaPerguntas(Jogo *g)
+/* ------------------------------------------------------------------ */
+/* GP06 - Funções Obrigatórias do Quiz                                 */
+/* ------------------------------------------------------------------ */
+static void quiz_embaralhar(Jogo *g)
 {
     for (int i = 0; i < PQ_N; i++) g->qOrdem[i] = i;
     for (int i = PQ_N - 1; i > 0; i--) {
@@ -519,22 +512,51 @@ static void EmbaralhaPerguntas(Jogo *g)
     }
 }
 
-/* Escolhe QN perguntas sem repetir na sequência e ordena por dificuldade crescente */
-static void IniciaQuiz(Jogo *g)
+static void quiz_carregar(Jogo *g)
 {
+    quiz_embaralhar(g);
     for (int i = 0; i < QN; i++) g->qSel[i] = g->qOrdem[(g->qCursor + i) % PQ_N];
     g->qCursor = (g->qCursor + QN) % PQ_N;
-    if (g->qCursor < QN) EmbaralhaPerguntas(g);
+    if (g->qCursor < QN) quiz_embaralhar(g);
     for (int i = 0; i < QN; i++)
         for (int j = 0; j < QN - 1 - i; j++)
             if (PERGUNTAS[g->qSel[j]].dif > PERGUNTAS[g->qSel[j + 1]].dif) {
                 int t = g->qSel[j]; g->qSel[j] = g->qSel[j + 1]; g->qSel[j + 1] = t;
             }
     g->qI = 0; g->qAcertos = 0; g->qResp = -1; g->qHint = 0; g->qFeedback = 0;
+    g->quizTempo = 30; /* GP06: Barra de tempo padrão de 30 segundos */
     g->qTempo = (float)g->quizTempo;
     g->qBeep = 99; g->qCur = 0; g->qRev = g->quizFeito; g->qPts = 0; g->qGanho = 0;
     g->estado = ST_QUIZ;
     TutAvanca(g, 1);
+}
+
+static void quiz_dica(Jogo *g)
+{
+    if (!g->qHint) {
+        g->qHint = 1;
+        g->qTempo = fmaxf(0.0f, g->qTempo - 3.0f); /* GP06: Tecla de dica custa 3 segundos */
+        Sfx(g, g->sClick);
+    }
+}
+
+static void quiz_porta_escolhida(Jogo *g, int porta)
+{
+    if (g->qFeedback != 0) return;
+    const Pergunta *p = &PERGUNTAS[g->qSel[g->qI]];
+    g->qResp = porta; g->qFeedback = 1; g->qGanho = 0;
+    if (porta == p->ok) {
+        g->qAcertos++; g->acertos++;
+        if (!g->qRev) {
+            g->qGanho = g->qHint ? p->dif : p->dif * 2;
+            GanhaPts(g, g->qGanho);
+            g->qPts += g->qGanho;
+        }
+        Sfx(g, g->sOk);
+    } else {
+        g->erros++;
+        Sfx(g, g->sBad);
+    }
 }
 
 static void IniciaLock(Jogo *g)
@@ -558,7 +580,6 @@ static void AbreDialogo(Jogo *g, int ch)
     TutAvanca(g, 2);
 }
 
-/* Derrota: confiança pública zerada. Encerra a campanha e invalida o save. */
 static void ChecaDerrota(Jogo *g)
 {
     if (g->conf <= 0 && g->estado != ST_FIM) {
@@ -641,7 +662,7 @@ static void Interage(Jogo *g, int i)
     const Objeto *o = &OBJETOS[i];
     switch (o->tipo) {
     case K_QUIZ:
-        IniciaQuiz(g);
+        quiz_carregar(g);
         break;
     case K_CIDADAO:
         AbreDialogo(g, o->id);
@@ -677,12 +698,7 @@ static void Interage(Jogo *g, int i)
     }
 }
 
-/* ================================================================== */
-/*  CONTINUAÇÃO DO PROJETO                                             */
-/*  Entrada, atualização de cada estado, desenho das telas e main().   */
-/* ================================================================== */
-
-#define VEL 175.0f              /* velocidade do jogador (px/s) */
+#define VEL 175.0f
 
 static const int QT_OPC[4] = {10, 15, 20, 30};
 static const char *CH_EST_TXT[4] = {"Novo", "Investigando", "Resolvido", "Encerrado sem investigação"};
@@ -690,7 +706,6 @@ static const char *CH_EST_TXT[4] = {"Novo", "Investigando", "Resolvido", "Encerr
 enum { M_INI, M_CONT, M_CFG, M_AUD, M_CRED, M_SAIR };
 static const char *MENU_TXT[6] = {"Iniciar jogo", "Continuar", "Configurações", "Áudio", "Créditos", "Sair"};
 
-/* Textos da Sala de Crise (escolha ética final) */
 static const char *CRISE_EVENTO =
     "A imprensa descobriu que moradores do Bairro Sul sofrem mais recusas automáticas. "
     "A prefeitura exige um posicionamento do Departamento sobre a NÓVA. O que você faz com o que descobriu?";
@@ -705,9 +720,6 @@ static const char *CRISE_DICA[4] = {
     "Resolve casos individuais, mas não enfrenta o problema estrutural.",
     "Evita atritos agora, mas deixa a população sem resposta."};
 
-/* ------------------------------------------------------------------ */
-/* Entrada (teclado e mouse)                                           */
-/* ------------------------------------------------------------------ */
 static int Sobre(Rectangle r) { return CheckCollisionPointRec(MouseV(), r); }
 static int Clique(Rectangle r) { return IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && Sobre(r); }
 static int MouseMexeu(void) { Vector2 d = GetMouseDelta(); return d.x != 0 || d.y != 0; }
@@ -717,7 +729,6 @@ static int Esq(void)   { return IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A); }
 static int Dir(void)   { return IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D); }
 static int Voltar(void) { return IsKeyPressed(KEY_ESCAPE) || IsKeyPressed(KEY_BACKSPACE); }
 
-/* Navega em uma lista vertical de n botões. Retorna 1 se o item selecionado foi ativado. */
 static int NavegaLista(int *sel, int n, float x, float y, float w, float h, float gap)
 {
     if (Cima()) *sel = (*sel + n - 1) % n;
@@ -731,7 +742,6 @@ static int NavegaLista(int *sel, int n, float x, float y, float w, float h, floa
     return ativa;
 }
 
-/* Texto que diminui a fonte até caber na largura máxima */
 static void TextoFit(const char *t, int x, int y, int wmax, int sz, Color c)
 {
     while (sz > 11 && MeasureText(t, sz) > wmax) sz--;
@@ -746,9 +756,6 @@ static void FundoTech(void)
     DrawRectangle(0, sy, W, 2, Fade(VERDE, 0.07f));
 }
 
-/* ------------------------------------------------------------------ */
-/* Sessão: inicialização de partidas, áudio e câmera                   */
-/* ------------------------------------------------------------------ */
 static void AtualizaCamera(Jogo *g, float dt, int snap)
 {
     float alvo = clampf(g->pos.x, W / 2.0f, WW - W / 2.0f);
@@ -762,7 +769,7 @@ static void AtualizaCamera(Jogo *g, float dt, int snap)
 
 static void PreparaSessao(Jogo *g)
 {
-    EmbaralhaPerguntas(g);
+    quiz_embaralhar(g);
     g->tutT = 0;
     if (Colide(g, RectJog(g->pos.x, g->pos.y))) g->pos = (Vector2){120, 400};
     AtualizaCamera(g, 0, 1);
@@ -795,9 +802,6 @@ static void EntraPausa(Jogo *g)
     g->estado = ST_PAUSE;
 }
 
-/* ------------------------------------------------------------------ */
-/* GP01 - Tela de criação/escolha de personagem                        */
-/* ------------------------------------------------------------------ */
 static Rectangle PersoCard(int i) { return (Rectangle){55 + i * 220.0f, 130, 190, 250}; }
 
 static void personagem_confirmar(Jogo *g)
@@ -810,17 +814,17 @@ static void personagem_confirmar(Jogo *g)
 
 static void tela_personagem_update(Jogo *g, float dt)
 {
-    if (g->persoOk) {                                  /* transição de 1,5 s após confirmar */
+    if (g->persoOk) {
         g->persoT += dt;
         if (g->persoT >= PERSO_T_CONFIRMA) {
             g->persoOk = 0;
-            g->introPg = 0; g->introRev = 0; g->estado = ST_INTRO;   /* cena de abertura -> mundo */
+            g->introPg = 0; g->introRev = 0; g->estado = ST_INTRO;
         }
         return;
     }
     if (Esq()) { g->persoSel = (g->persoSel + PERSO_N - 1) % PERSO_N; Sfx(g, g->sClick); }
     if (Dir()) { g->persoSel = (g->persoSel + 1) % PERSO_N; Sfx(g, g->sClick); }
-    for (int i = 0; i < PERSO_N; i++) {                /* mouse: 1º clique seleciona, 2º confirma */
+    for (int i = 0; i < PERSO_N; i++) {
         if (!Clique(PersoCard(i))) continue;
         if (i == g->persoSel) { personagem_confirmar(g); return; }
         g->persoSel = i; Sfx(g, g->sClick);
@@ -829,9 +833,6 @@ static void tela_personagem_update(Jogo *g, float dt)
     if (Voltar()) g->estado = ST_MENU;
 }
 
-/* ------------------------------------------------------------------ */
-/* Menu principal, configurações, áudio, créditos e introdução         */
-/* ------------------------------------------------------------------ */
 static int MenuItens(const Jogo *g, int *ids)
 {
     int n = 0;
@@ -888,11 +889,11 @@ static void AtualizaConfig(Jogo *g)
         if (ativa && d == 0) d = 1;
         if (d != 0) { k = (k + 4 + d) % 4; g->quizTempo = QT_OPC[k]; Sfx(g, g->sClick); }
     } else if (ativa && g->cfgSel == 1) {
-        if (g->cfgVolta == ST_PAUSE) {            /* rever tutorial dentro da partida */
+        if (g->cfgVolta == ST_PAUSE) {
             g->tut = 0; g->tutAtivo = 1; g->tutT = 0;
             g->estado = g->volta;
             Msg(g, "Tutorial reiniciado.", VERDE);
-        } else {                                   /* a partir do menu: mostra as instruções */
+        } else {
             g->introRev = 1; g->introPg = 2; g->estado = ST_INTRO;
         }
     } else if (ativa && g->cfgSel == 2) {
@@ -936,9 +937,6 @@ static void AtualizaIntro(Jogo *g)
     }
 }
 
-/* ------------------------------------------------------------------ */
-/* Exploração                                                          */
-/* ------------------------------------------------------------------ */
 static void AtualizaJogador(Jogo *g, float dt)
 {
     float dx = 0, dy = 0;
@@ -988,12 +986,8 @@ static void AtualizaNota(Jogo *g)
     }
 }
 
-/* ------------------------------------------------------------------ */
-/* Diálogo / chamados                                                  */
-/* ------------------------------------------------------------------ */
 static Rectangle DlgOp(int i) { return (Rectangle){60, 316 + i * 54, 840, 44}; }
 
-/* Aplica as consequências da escolha do jogador no chamado */
 static void EscolheOpcao(Jogo *g, int o)
 {
     const Chamado *c = &CHAMADOS[g->dlgCh];
@@ -1036,7 +1030,7 @@ static void AtualizaDlg(Jogo *g)
         return;
     }
     if (Confirma() || IsKeyPressed(KEY_E) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        if (g->dlgFase == 3) {                       /* evidências completas: resolve o chamado */
+        if (g->dlgFase == 3) {
             g->chEst[ch] = CH_RESOLVIDO;
             GanhaPts(g, 5);
             MudaConf(g, 8);
@@ -1049,26 +1043,12 @@ static void AtualizaDlg(Jogo *g)
 }
 
 /* ------------------------------------------------------------------ */
-/* Quiz                                                                */
+/* GP06 - Atualização do Quiz com Portas A/B/C Geométricas no Mapa     */
 /* ------------------------------------------------------------------ */
-static Rectangle QuizOp(int i) { return (Rectangle){70, 236 + i * 46, 820, 40}; }
-
-static void QuizResponde(Jogo *g, int o)
+static Rectangle QuizPortaRect(int i)
 {
-    const Pergunta *p = &PERGUNTAS[g->qSel[g->qI]];
-    g->qResp = o; g->qFeedback = 1; g->qGanho = 0;
-    if (o == p->ok) {
-        g->qAcertos++; g->acertos++;
-        if (!g->qRev) {                              /* modo revisão não pontua */
-            g->qGanho = g->qHint ? p->dif : p->dif * 2;
-            GanhaPts(g, g->qGanho);
-            g->qPts += g->qGanho;
-        }
-        Sfx(g, g->sOk);
-    } else {
-        g->erros++;
-        Sfx(g, g->sBad);
-    }
+    /* GP06: Três portas A/B/C estruturadas como retângulos na tela do quiz */
+    return (Rectangle){120 + i * 250, 260, 220, 110};
 }
 
 static void QuizAvanca(Jogo *g)
@@ -1096,61 +1076,26 @@ static void AtualizaQuiz(Jogo *g, float dt)
         g->qTempo -= dt;
         int seg = (int)ceilf(g->qTempo);
         if (g->qTempo > 0 && seg <= 3 && seg != g->qBeep) { g->qBeep = seg; Sfx(g, g->sClick); }
-        if (g->qTempo <= 0) { g->qTempo = 0; QuizResponde(g, -2); return; }
+        if (g->qTempo <= 0) { g->qTempo = 0; quiz_porta_escolhida(g, -2); return; }
+        
         int o = -1;
-        if (Cima()) g->qCur = (g->qCur + 2) % 3;
-        if (Baixo()) g->qCur = (g->qCur + 1) % 3;
+        if (Esq()) g->qCur = (g->qCur + 2) % 3;
+        if (Dir()) g->qCur = (g->qCur + 1) % 3;
         if (IsKeyPressed(KEY_ONE)) o = 0;
         if (IsKeyPressed(KEY_TWO)) o = 1;
         if (IsKeyPressed(KEY_THREE)) o = 2;
         if (Confirma()) o = g->qCur;
-        if (IsKeyPressed(KEY_H)) g->qHint = 1;
+        if (IsKeyPressed(KEY_H) || IsKeyPressed(KEY_D)) quiz_dica(g); /* GP06/GP08: Tecla de dica */
+        
         for (int i = 0; i < 3; i++) {
-            Rectangle r = QuizOp(i);
+            Rectangle r = QuizPortaRect(i);
             if (MouseMexeu() && Sobre(r)) g->qCur = i;
-            if (Clique(r)) o = i;
+            if (Clique(r)) o = i; /* GP06: Entrar na porta escolhida */
         }
-        if (o >= 0) QuizResponde(g, o);
+        if (o >= 0) quiz_porta_escolhida(g, o);
     } else if (Confirma() || IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         if (g->qFeedback == 1) QuizAvanca(g);
         else g->estado = ST_PLAY;
-    }
-}
-
-/* ------------------------------------------------------------------ */
-/* Cadeado lógico                                                      */
-/* ------------------------------------------------------------------ */
-static Rectangle LkRect(int i) { return (Rectangle){120 + i * 250, 270, 220, 92}; }
-
-/* Procura (por força bruta) uma combinação que satisfaz o desafio d */
-static int lkSolucao(int d, int *out)
-{
-    for (int m = 0; m < 8; m++) {
-        int v[3] = {m & 1, (m >> 1) & 1, (m >> 2) & 1};
-        if (lkAvalia(d, v)) { memcpy(out, v, sizeof v); return 1; }
-    }
-    return 0;
-}
-
-static void LkTenta(Jogo *g)
-{
-    if (lkAvalia(g->lkD, g->lkV)) {
-        GanhaPts(g, g->lkT > 15 ? 4 : 3);
-        Sfx(g, g->sOk);
-        g->lkD++;
-        g->lkFl = 1; g->lkAux = 1.4f;
-        if (g->lkD >= LK_N) {
-            g->lkFase = 1; g->lkOk = 1; g->lockAberto = 1;
-            GanhaPts(g, 3); MudaConf(g, 3);
-            Msg(g, "Cadeado aberto: Zona Crédito liberada.", VERDE);
-            Salvar(g, 0);
-        } else {
-            memcpy(g->lkV, LK_INI[g->lkD], sizeof g->lkV);
-            g->lkT = 30; g->lkSel = 0;
-        }
-    } else {
-        g->lkFl = -1; g->lkAux = 1.4f;
-        Sfx(g, g->sBad);
     }
 }
 
@@ -1175,11 +1120,6 @@ static void AtualizaLock(Jogo *g, float dt)
     if (t >= 0) { g->lkV[t] = !g->lkV[t]; g->lkSel = t; Sfx(g, g->sClick); }
     if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_KP_ENTER)) LkTenta(g);
 }
-
-/* ------------------------------------------------------------------ */
-/* Sala de crise (escolha ética final)                                 */
-/* ------------------------------------------------------------------ */
-static Rectangle CriseOp(int i) { return (Rectangle){90, 262 + i * 50, 780, 42}; }
 
 static void DecideCrise(Jogo *g, int o)
 {
@@ -1244,15 +1184,9 @@ static void AtualizaCrise(Jogo *g)
     }
 }
 
-/* ------------------------------------------------------------------ */
-/* Pausa e tela final                                                  */
-/* ------------------------------------------------------------------ */
-static const Rectangle CONF_SIM = {350, 300, 120, 40};
-static const Rectangle CONF_NAO = {490, 300, 120, 40};
-
 static void AtualizaPausa(Jogo *g)
 {
-    if (g->confirma) {                               /* janela de confirmação */
+    if (g->confirma) {
         if (Esq() || Dir()) g->confSel = !g->confSel;
         int sim = IsKeyPressed(KEY_S);
         int nao = IsKeyPressed(KEY_N) || IsKeyPressed(KEY_ESCAPE);
@@ -1261,11 +1195,11 @@ static void AtualizaPausa(Jogo *g)
         if (Clique(CONF_NAO)) nao = 1;
         if (Confirma()) { if (g->confSel) sim = 1; else nao = 1; }
         if (sim) {
-            if (g->confirma == 1) {                  /* reiniciar a fase */
+            if (g->confirma == 1) {
                 IniciarNovo(g);
                 g->estado = ST_PLAY;
                 Msg(g, "Fase reiniciada.", AMARELO);
-            } else {                                 /* voltar ao menu (salva o progresso) */
+            } else {
                 Salvar(g, 0);
                 g->estado = ST_MENU; g->menuSel = 0;
             }
@@ -1295,9 +1229,6 @@ static void AtualizaFim(Jogo *g)
     }
 }
 
-/* ------------------------------------------------------------------ */
-/* Atualização geral                                                   */
-/* ------------------------------------------------------------------ */
 static void Atualiza(Jogo *g, float dt)
 {
     if (g->msgT > 0) g->msgT -= dt;
@@ -1316,8 +1247,8 @@ static void Atualiza(Jogo *g, float dt)
     case ST_QUIZ:   AtualizaQuiz(g, dt); break;
     case ST_LOCK:   AtualizaLock(g, dt); break;
     case ST_NOTE:   AtualizaNota(g); break;
-    case ST_PAUSE:  AtualizaPausa(g); break;
     case ST_CRISE:  AtualizaCrise(g); break;
+    case ST_PAUSE:  AtualizaPausa(g); break;
     case ST_FIM:    AtualizaFim(g); break;
     case ST_PERSO:  tela_personagem_update(g, dt); break;
     }
@@ -1443,14 +1374,13 @@ static void DesenhaMundo(const Jogo *g)
         DrawRectangleLinesEx(BARREIRA, 1, Fade(VERDE, 0.3f));
     }
 
-    /* objetos "atrás" do jogador, depois o jogador, depois os objetos "à frente" */
     for (int i = 0; i < OBJ_N; i++)
         if (OBJETOS[i].r.y + OBJETOS[i].r.height <= g->pos.y) DesenhaObjeto(g, i);
     DesenhaJogador(g);
     for (int i = 0; i < OBJ_N; i++)
         if (OBJETOS[i].r.y + OBJETOS[i].r.height > g->pos.y) DesenhaObjeto(g, i);
 
-    if (g->estado == ST_PLAY) {                      /* indicador de interação */
+    if (g->estado == ST_PLAY) {
         int p = ObjetoProximo(g);
         if (p >= 0) {
             const char *t = TextFormat("[E] %s", OBJETOS[p].rotulo);
@@ -1613,7 +1543,7 @@ static void DesenhaIntro(const Jogo *g)
         DrawText("WASD / setas ... mover", 110, 160, 20, TEXTO);
         DrawText("E ... interagir (terminais, cidadãos, evidências)", 110, 188, 20, TEXTO);
         DrawText("TAB ... caderno de evidências", 110, 216, 20, TEXTO);
-        DrawText("ESC ... pausa      1/2/3 ou mouse ... escolher respostas", 110, 244, 20, TEXTO);
+        DrawText("ESC ... pausa      1/2/3 ou mouse ... escolher portas", 110, 244, 20, TEXTO);
         TextoQuebra("Seu primeiro chamado já chegou: o Sr. Marcos teve um auxílio negado. "
                     "Antes, faça o treinamento no terminal à esquerda.", 110, 300, 740, 20, AMARELO);
     }
@@ -1621,7 +1551,6 @@ static void DesenhaIntro(const Jogo *g)
     TextoCentro("ENTER ou clique: continuar   |   ESC: pular", W / 2, 415, 16, CINZA);
 }
 
-/* ---- Caderno ---- */
 static int Campo(const char *rot, const char *txt, int x, int y, int w)
 {
     DrawText(rot, x, y, 14, VERDE);
@@ -1642,14 +1571,12 @@ static void DesenhaNota(const Jogo *g)
         if (g->found[i]) TextoFit(EVIDENCIAS[i].nome, (int)r.x + 10, (int)r.y + 13, 300, 17, TEXTO);
         else DrawText("??? (não encontrada)", (int)r.x + 10, (int)r.y + 13, 17, CINZA);
     }
-    /* chamado atual */
     const Chamado *c = &CHAMADOS[g->chAtual];
     DrawRectangleLines(60, 330, 320, 166, VERDE_E);
     DrawText("CHAMADO ATUAL", 70, 336, 14, VERDE);
     TextoFit(TextFormat("%s - %s", c->nome, c->titulo), 70, 354, 300, 16, AMARELO);
     int y = TextoQuebra(c->decisao, 70, 376, 300, 14, TEXTO);
     TextoQuebra(c->info, 70, y + 4, 300, 14, CINZA);
-    /* detalhe */
     const Evidencia *e = &EVIDENCIAS[g->nbSel];
     if (g->found[g->nbSel]) {
         DrawText(e->nome, 410, 112, 22, AMARELO);
@@ -1670,7 +1597,6 @@ static void DesenhaNota(const Jogo *g)
     DrawText("Setas ou mouse: selecionar  |  TAB/ESC: fechar", 410, 470, 14, CINZA);
 }
 
-/* ---- Diálogo ---- */
 static void DesenhaDlg(const Jogo *g)
 {
     const Chamado *c = &CHAMADOS[g->dlgCh];
@@ -1724,7 +1650,9 @@ static void DesenhaDlg(const Jogo *g)
     }
 }
 
-/* ---- Quiz ---- */
+/* ------------------------------------------------------------------ */
+/* GP06 - Desenho do Quiz com Portas A/B/C e Balão de Explicação       */
+/* ------------------------------------------------------------------ */
 static void DesenhaQuiz(const Jogo *g)
 {
     Escurece();
@@ -1742,44 +1670,55 @@ static void DesenhaQuiz(const Jogo *g)
         return;
     }
     const Pergunta *p = &PERGUNTAS[g->qSel[clampi(g->qI, 0, QN - 1)]];
-    DrawText(TextFormat("TREINAMENTO ALGORÍTMICO  |  Pergunta %d/%d  |  Dificuldade %d/3%s", g->qI + 1, QN, p->dif,
+    
+    /* GP06: Cabeçalho com “Pergunta N/total — Manual de Treinamento” */
+    DrawText(TextFormat("Manual de Treinamento  |  Pergunta %d/%d  |  Dificuldade %d/3%s", g->qI + 1, QN, p->dif,
                         g->qRev ? "  |  revisão" : ""), 70, 76, 18, VERDE);
+    
     float fr = g->quizTempo > 0 ? clampf(g->qTempo / (float)g->quizTempo, 0, 1) : 0;
     Color ct = fr > 0.5f ? VERDE : (fr > 0.25f ? AMARELO : VERM);
     DrawRectangle(70, 100, 820, 10, (Color){10, 30, 28, 255});
     DrawRectangle(70, 100, (int)(820 * fr), 10, ct);
     DrawRectangleLines(70, 100, 820, 10, VERDE_E);
     if (g->qFeedback == 0) DrawText(TextFormat("TEMPO: %d s", (int)ceilf(g->qTempo)), 790, 76, 18, ct);
-    TextoQuebra(p->q, 70, 122, 820, 22, TEXTO);
+    
+    TextoQuebra(p->q, 70, 122, 820, 20, TEXTO);
+
+    /* GP06: Três portas A/B/C desenhadas como retângulos no quiz */
     for (int i = 0; i < 3; i++) {
-        Rectangle r = QuizOp(i);
+        Rectangle r = QuizPortaRect(i);
         Color borda = (g->qFeedback == 0 && i == g->qCur) ? VERDE : VERDE_E;
         Color cor = TEXTO;
         const char *suf = "";
         if (g->qFeedback == 1) {
-            if (i == p->ok) { borda = VERDE; cor = VERDE; suf = "   [CORRETA]"; }
-            else if (i == g->qResp) { borda = VERM; cor = VERM; suf = "   [SUA RESPOSTA]"; }
+            if (i == p->ok) { borda = VERDE; cor = VERDE; suf = "\n[CORRETA]"; }
+            else if (i == g->qResp) { borda = VERM; cor = VERM; suf = "\n[SUA PORTA]"; }
             else borda = CINZA;
         }
         DrawRectangleRec(r, (g->qFeedback == 0 && i == g->qCur) ? (Color){0, 70, 45, 255} : (Color){10, 24, 24, 255});
         DrawRectangleLinesEx(r, (g->qFeedback == 0 && i == g->qCur) || (g->qFeedback == 1 && i == p->ok) ? 3 : 1, borda);
-        TextoFit(TextFormat("%c) %s%s", 'A' + i, p->op[i], suf), (int)r.x + 14, (int)r.y + 11, 790, 18, cor);
+        
+        char porta_txt[256];
+        snprintf(porta_txt, sizeof(porta_txt), "Porta %c\n%s%s", 'A' + i, p->op[i], suf);
+        TextoQuebra(porta_txt, (int)r.x + 10, (int)r.y + 10, (int)r.width - 20, 14, cor);
     }
+
     if (g->qFeedback == 0) {
-        if (g->qHint) TextoQuebra(TextFormat("Dica: %s", p->dica), 70, 376, 820, 17, AMARELO);
-        else DrawText("[H] mostrar dica (vale menos pontos)", 70, 376, 15, CINZA);
-        TextoCentro("1-3, setas + ENTER ou mouse  |  ESC: pausa", W / 2, 474, 14, CINZA);
+        if (g->qHint) TextoQuebra(TextFormat("Dica: %s", p->dica), 70, 385, 820, 16, AMARELO);
+        else DrawText("[H] ou [D] pedir dica (-3s no cronômetro)", 70, 385, 15, CINZA);
+        TextoCentro("1-3, setas + ENTER ou clique na porta  |  ESC: pausa", W / 2, 474, 14, CINZA);
     } else {
-        if (g->qResp == -2) DrawText("Tempo esgotado! Pergunta não respondida.", 70, 374, 18, VERM);
+        /* GP06: Balão com a explicação e feedback correto/incorreto */
+        if (g->qResp == -2) DrawText("Tempo esgotado! Conta como erro.", 70, 380, 18, VERM);
         else if (g->qResp == p->ok)
-            DrawText(g->qRev ? "Correto!" : TextFormat("Correto! +%d ponto(s)", g->qGanho), 70, 374, 18, VERDE);
-        else DrawText("Resposta incorreta: consulte a explicação.", 70, 374, 18, VERM);
-        TextoQuebra(p->expl, 70, 400, 820, 17, TEXTO);
+            DrawText(g->qRev ? "Correto!" : TextFormat("Correto! +%d ponto(s)", g->qGanho), 70, 380, 18, VERDE);
+        else DrawText("Incorreto.", 70, 380, 18, VERM);
+        
+        TextoQuebra(p->expl, 70, 405, 820, 16, TEXTO);
         TextoCentro("ENTER ou clique: continuar", W / 2, 474, 14, CINZA);
     }
 }
 
-/* ---- Cadeado lógico ---- */
 static void DesenhaLock(const Jogo *g)
 {
     Escurece();
@@ -1833,7 +1772,6 @@ static void DesenhaLock(const Jogo *g)
     TextoCentro("1/2/3 ou clique: alternar  |  setas + ESPAÇO: alternar  |  ENTER: abrir  |  ESC: pausa", W / 2, 446, 14, CINZA);
 }
 
-/* ---- Sala de crise ---- */
 static void DesenhaCrise(const Jogo *g)
 {
     Escurece();
@@ -1859,7 +1797,6 @@ static void DesenhaCrise(const Jogo *g)
     }
 }
 
-/* ---- Pausa ---- */
 static void DesenhaPausa(const Jogo *g)
 {
     DrawRectangle(0, 0, W, H, Fade(BLACK, 0.6f));
@@ -1877,7 +1814,6 @@ static void DesenhaPausa(const Jogo *g)
     }
 }
 
-/* ---- Tela final ---- */
 static void DesenhaFim(const Jogo *g)
 {
     FundoTech();
@@ -1912,13 +1848,13 @@ static void DesenhaPerso(const Jogo *g)
         Painel(r, VERDE_E);
         personagem_desenhar(r.x + r.width / 2, r.y + 150, i, sel ? sinf(t * 4.0f) * 2.0f : 0.0f, 4.0f);
         TextoCentro(PERSONAGENS[i].nome, (int)(r.x + r.width / 2), (int)r.y + 192, 24, sel ? TEXTO : CINZA);
-        if (sel) {                                       /* borda neon com brilho */
+        if (sel) {
             for (int k = 1; k <= 3; k++)
                 DrawRectangleLinesEx((Rectangle){r.x - k * 3, r.y - k * 3, r.width + k * 6, r.height + k * 6},
                                      2, Fade(VERDE, 0.30f / k));
             DrawRectangleLinesEx(r, 3, VERDE);
         } else {
-            DrawRectangleRec(r, Fade(BLACK, 0.55f));     /* demais cartões escurecem */
+            DrawRectangleRec(r, Fade(BLACK, 0.55f));
         }
     }
     TextoCentro("Setas ou A/D trocam   |   ENTER confirma   |   ESC volta", W / 2, 420, 16, CINZA);
@@ -1951,22 +1887,21 @@ static void DesenhaTela(const Jogo *g, Estado e)
     }
 }
 
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 /* main: janela, recursos, laço principal e encerramento              */
-/* ================================================================== */
+/* ------------------------------------------------------------------ */
 int main(void)
 {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(W, H, "REV.IA - Departamento de Alfabetização Algorítmica");
     SetWindowMinSize(480, 270);
-    SetExitKey(KEY_NULL);                      /* ESC é usado para pausar, não para fechar */
+    SetExitKey(KEY_NULL);
     SetTargetFPS(60);
     srand((unsigned)time(NULL));
 
     Jogo g;
     memset(&g, 0, sizeof g);
 
-    /* áudio: gerado em memória; o jogo funciona mesmo sem dispositivo de áudio */
     InitAudioDevice();
     g.audioDev = IsAudioDeviceReady();
     g.audioOn = 1; g.volMusica = 0.5f; g.volSfx = 0.7f;
@@ -1981,7 +1916,7 @@ int main(void)
     RenderTexture2D alvo = LoadRenderTexture(W, H);
     SetTextureFilter(alvo.texture, TEXTURE_FILTER_BILINEAR);
 
-    g.quizTempo = 15;
+    g.quizTempo = 30;
     IniciarNovo(&g);
     Save tmp;
     g.saveStatus = ChecaSave(&tmp);
@@ -2007,7 +1942,6 @@ int main(void)
         EndDrawing();
     }
 
-    /* liberação de recursos */
     UnloadRenderTexture(alvo);
     if (g.audioDev) {
         StopSound(g.sAmb);
@@ -2016,4 +1950,4 @@ int main(void)
     CloseAudioDevice();
     CloseWindow();
     return 0;
-}
+}
