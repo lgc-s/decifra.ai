@@ -6,12 +6,13 @@
 
 #include "raylib.h"
 
-#include "core/audio.h"
-#include "core/config.h"
-#include "core/input.h"
+#include "audio.h"
+#include "config.h"
+#include "input.h"
 #include "education/bias_game.h"
 #include "education/quiz.h"
 #include "entities/entities.h"
+#include "entities/hazards.h"
 #include "narrative/dialogue.h"
 #include "player/player.h"
 #include "render/fx.h"
@@ -38,6 +39,7 @@ typedef struct Game {
     GameCamera cam;
     Tuning tuning;
     EntityEvents ev;
+    Hazards haz;                         /* bugs no chão e objetos que caem do céu */
     int playing_act;
 
     Palette pal;                         /* paleta atual (muda suavemente entre regiões) */
@@ -65,7 +67,7 @@ typedef struct Game {
     /* telas de conteúdo */
     struct { const Dialogue *d; int id, line; float shown; } dlg;
     struct { int id, phase, cursor, delta; } call;              /* phase 0 escolhe, 1 resultado */
-    struct { QuizRun run; int cursor, phase; float t; } quiz;   /* phase 0 pergunta, 1 feedback */
+    struct { QuizRun run; int cursor, phase; float t; int delta; bool first; } quiz;   /* phase 0 pergunta, 1 feedback, 2 resultado */
     struct { BiasGame g; int cursor; float anim; } bias;
     struct { float t; } actdone;
     struct { float t; } ending;

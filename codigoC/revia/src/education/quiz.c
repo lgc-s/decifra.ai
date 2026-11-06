@@ -179,13 +179,19 @@ void quiz_start(QuizRun *r, int session, uint32_t seed) {
     r->session = session;
     r->rng = seed ? seed : 12345u;
 
-    /* Escolhe 2 questões do banco para descartar, mantendo a ordem de dificuldade. */
-    int drop_a = (int)(rng_next(&r->rng) % QUIZ_POOL);
-    int drop_b = (int)(rng_next(&r->rng) % (QUIZ_POOL - 1));
-    if (drop_b >= drop_a) drop_b++;
-    int n = 0;
-    for (int i = 0; i < QUIZ_POOL && n < QUIZ_LEN; i++)
-        if (i != drop_a && i != drop_b) r->pool_idx[n++] = i;
+       /* Sorteia QUIZ_LEN questões distintas do banco e as põe em ordem crescente de dificuldade. */
+    int idx[QUIZ_POOL];
+    for (int i = 0; i < QUIZ_POOL; i++) idx[i] = i;
+    for (int i = 0; i < QUIZ_LEN; i++) {                     /* Fisher-Yates parcial */
+        int j = i + (int)(rng_next(&r->rng) % (uint32_t)(QUIZ_POOL - i));
+        int t = idx[i]; idx[i] = idx[j]; idx[j] = t;
+    }
+    for (int i = 1; i < QUIZ_LEN; i++) {                     /* ordena os sorteados */
+        int v = idx[i], k = i - 1;
+        while (k >= 0 && idx[k] > v) { idx[k + 1] = idx[k]; k--; }
+        idx[k + 1] = v;
+    }
+    for (int i = 0; i < QUIZ_LEN; i++) r->pool_idx[i] = idx[i];
 
     /* Embaralha as alternativas de cada questão (Fisher-Yates). */
     for (int q = 0; q < QUIZ_LEN; q++) {
@@ -215,21 +221,25 @@ int quiz_correct_display_index(const QuizRun *r) {
 }
 
 bool quiz_answer(QuizRun *r, int display_idx) {
-    if (r->answered || r->finished || r->failed) return r->last_correct;
+    if (r->answered || r->finished) return r->last_correct;
     bool ok = r->perm[r->cur][display_idx] == 0;
     r->answered = true;
     r->last_correct = ok;
     if (ok) { r->correct_count++; r->correct_mask |= (uint16_t)(1u << r->cur); }
-    else    { r->failed = true; }
+    else    { r->wrong_count++;   r->wrong_mask   |= (uint16_t)(1u << r->cur); }
     return ok;
 }
 
 void quiz_next(QuizRun *r) {
-    if (!r->answered || r->failed) return;
+    if (!r->answered || r->finished) return;
     r->answered = false;
     r->cur++;
     if (r->cur >= QUIZ_LEN) {
         r->cur = QUIZ_LEN - 1;
         r->finished = true;
     }
+}
+
+int quiz_trust_delta(const QuizRun *r) {
+    return r->correct_count * QUIZ_TRUST_RIGHT - r->wrong_count * QUIZ_TRUST_WRONG;
 }

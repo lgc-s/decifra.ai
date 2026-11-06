@@ -88,6 +88,7 @@ static bool load_act(Game *g, int act) {
     g->load_error[0] = '\0';
     g->playing_act = act;
     entities_prepare(&g->level, g->prog.collected);
+    hazards_init(&g->haz, &g->level, (Difficulty)g->prog.difficulty);
     player_reset(&g->player, g->level.spawn);
     g->player.stamina = g->tuning.stamina_max;
     camera_snap(&g->cam, &g->level, (Vec2f){ g->player.pos.x, g->player.pos.y });
@@ -192,7 +193,7 @@ void game_start_quiz(Game *g, int session) {
     if (session < 0 || session >= NUM_QUIZ_SESSIONS) return;
     uint32_t seed = (uint32_t)(GetTime() * 1000.0) * 2654435761u + (uint32_t)g->prog.quiz_attempts[session] * 7919u + 17u;
     quiz_start(&g->quiz.run, session, seed);
-    g->quiz.cursor = 0; g->quiz.phase = 0; g->quiz.t = 0;
+    g->quiz.cursor = 0; g->quiz.phase = 0; g->quiz.t = 0; g->quiz.delta = 0; g->quiz.first = false;
     g->state = ST_QUIZ;
     audio_play(&g->audio, SFX_CONFIRM);
 }
@@ -243,6 +244,17 @@ static void handle_player_events(Game *g) {
     }
     if (p->state == PS_DASH)
         fx_trail(&g->fx, fx_ - 1, p->pos.y + 4, g->player.dash_ready ? g->pal.accent : (Color){ 190, 150, 255, 255 });
+}
+
+static void handle_hazard_events(Game *g, const HazardEvents *hev) {
+    if (hev->landed) {                 /* objeto bateu no chão: poeira e som (só se estiver perto) */
+        float dx = hev->land_x - g->player.pos.x;
+        if (dx > -170.0f && dx < 170.0f) {
+            audio_play(&g->audio, SFX_LAND);
+            camera_add_shake(&g->cam, 0.8f);
+        }
+        fx_burst(&g->fx, hev->land_x, hev->land_y - 1.0f, 8, 55, g->pal.spike, 0.35f);
+    }
 }
 
 static void handle_entity_events(Game *g) {
@@ -304,6 +316,11 @@ static void play_step(Game *g) {
     } else {
         player_update(p, &pi, &g->level, &g->tuning, FIXED_DT);
         level_update(&g->level, FIXED_DT, player_hitbox(p));
+        {   /* perigos móveis: podem matar o jogador neste mesmo passo */
+            HazardEvents hev;
+            hazards_update(&g->haz, &g->level, p, FIXED_DT, &hev);
+            handle_hazard_events(g, &hev);
+        }
         handle_player_events(g);
         entities_update(&g->level, p, FIXED_DT, &g->ev);
         handle_entity_events(g);

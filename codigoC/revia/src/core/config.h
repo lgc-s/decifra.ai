@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 #define GAME_TITLE   "REV.IA - DECIFRA.IA"
-#define GAME_VERSION "0.1.0"
+#define GAME_VERSION "3.0"
 
 /* --- Tela e laço principal --- */
 #define TILE_SIZE      8

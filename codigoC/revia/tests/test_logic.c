@@ -374,21 +374,45 @@ static void test_quiz(void) {
             seen++;
             if (seen > 20) break;
         }
-        CHECK(r.finished && !r.failed && r.correct_count == QUIZ_LEN && seen == QUIZ_LEN, "sessao %d: concluir exige 10 acertos (%d)", s, r.correct_count);
-        CHECK(r.correct_mask == (1u << QUIZ_LEN) - 1u, "mascara de acertos incorreta");
+        CHECK(r.finished && r.correct_count == QUIZ_LEN && r.wrong_count == 0 && seen == QUIZ_LEN,
+              "sessao %d: todas certas (%d)", s, r.correct_count);
+        CHECK(r.correct_mask == (1u << QUIZ_LEN) - 1u && r.wrong_mask == 0, "mascaras incorretas");
+        CHECK(quiz_trust_delta(&r) == QUIZ_LEN * QUIZ_TRUST_RIGHT, "soma de confianca com tudo certo");
+        for (int i = 0; i < QUIZ_LEN - 1; i++)
+            CHECK(r.pool_idx[i] < r.pool_idx[i + 1], "questoes distintas, em ordem crescente de dificuldade");
     }
-    /* errar reprova a sessão e exige reiniciar */
+    /* errar NÃO reinicia: a questão conta como errada e a sessão segue até o fim */
     QuizRun r; quiz_start(&r, 0, 42);
     int wrong = (quiz_correct_display_index(&r) + 1) % 4;
-    CHECK(!quiz_answer(&r, wrong), "resposta errada deveria falhar");
-    CHECK(r.failed, "sessao deveria estar reprovada");
+    CHECK(!quiz_answer(&r, wrong), "resposta errada deveria errar");
+    CHECK(r.wrong_count == 1 && (r.wrong_mask & 1u) && !r.finished, "erro deveria ser contado");
     quiz_next(&r);
-    CHECK(!r.finished && r.cur == 0, "nao deve avancar apos errar");
+    CHECK(r.cur == 1 && !r.answered && !r.finished, "deve avancar para a proxima apos errar");
+    /* tudo errado: termina e a soma é negativa */
+    QuizRun w; quiz_start(&w, 2, 7);
+    for (int i = 0; i < QUIZ_LEN; i++) {
+        quiz_answer(&w, (quiz_correct_display_index(&w) + 1) % 4);
+        quiz_next(&w);
+    }
+    CHECK(w.finished && w.correct_count == 0 && w.wrong_count == QUIZ_LEN, "sessao toda errada deve terminar");
+    CHECK(quiz_trust_delta(&w) == -QUIZ_LEN * QUIZ_TRUST_WRONG, "soma de confianca com tudo errado");
+    /* misto: 1 erro e o resto certo */
+    QuizRun m; quiz_start(&m, 1, 99);
+    for (int i = 0; i < QUIZ_LEN; i++) {
+        int good = quiz_correct_display_index(&m);
+        quiz_answer(&m, i == 1 ? (good + 1) % 4 : good);
+        quiz_next(&m);
+    }
+    CHECK(m.finished && m.wrong_count == 1 && m.correct_count == QUIZ_LEN - 1, "sessao mista");
+    CHECK(quiz_trust_delta(&m) == (QUIZ_LEN - 1) * QUIZ_TRUST_RIGHT - QUIZ_TRUST_WRONG, "soma de confianca mista");
+    /* a ultima resposta nao pode ser alterada depois de terminar */
+    int before = m.correct_count + m.wrong_count;
+    quiz_answer(&m, 0); quiz_next(&m);
+    CHECK(m.correct_count + m.wrong_count == before, "sessao concluida nao aceita novas respostas");
     /* variações: com sementes diferentes, a seleção ou a ordem das alternativas muda */
     QuizRun a, b; quiz_start(&a, 1, 1); quiz_start(&b, 1, 99999);
     bool differs = memcmp(a.pool_idx, b.pool_idx, sizeof a.pool_idx) != 0 || memcmp(a.perm, b.perm, sizeof a.perm) != 0;
-    CHECK(differs, "reiniciar deveria gerar variacoes");
-    for (int i = 0; i < QUIZ_LEN - 1; i++) CHECK(a.pool_idx[i] < a.pool_idx[i + 1], "ordem de dificuldade deve ser crescente");
+    CHECK(differs, "sementes diferentes deveriam gerar variacoes");
 }
 
 static void test_bias(void) {

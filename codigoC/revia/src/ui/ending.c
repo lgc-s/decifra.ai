@@ -64,20 +64,16 @@ void ending_draw(const Game *g) {
     gfx_text_center(TextFormat("FINAL %d DE %d", id + 1, NUM_ENDINGS), VIEW_W / 2, 24, 10, Fade(UI_DIM, a));
     gfx_text_center(e->title, VIEW_W / 2, 40, 20, Fade(UI_TEXT, a));
 
-    for (int i = 0; i < 3; i++) {
-        float st = 1.8f + (float)i * 2.0f;
+        for (int i = 0; i < 3; i++) {
+        float st = 1.6f + (float)i * 1.8f;
         if (t < st) break;
         float la = (t - st) > 1.0f ? 1.0f : (t - st);
-        gfx_text_wrap(e->lines[i], 48, 78 + i * 30, VIEW_W - 96, 10, Fade(UI_TEXT, la), -1);
+        gfx_text_wrap(e->lines[i], 40, 68 + i * 27, VIEW_W - 80, 10, Fade(UI_TEXT, la), -1);
     }
-    if (t > 8.0f) {
-        char tm[16];
-        format_time(p->play_time, tm, sizeof tm);
-        gfx_text_center(TextFormat("Confiança Pública: %d   Decisões acertadas: %d/%d   Viés %s",
-                                   p->trust, decisions_good_count(p), NUM_CALLS, p->bias_solved ? "corrigido" : "não corrigido"),
-                        VIEW_W / 2, 172, 10, UI_WARN);
-        gfx_text_center(TextFormat("Tempo: %s   Quedas: %u   Chips: %d/%d", tm, p->deaths, progress_collected_count(p), NUM_COLLECTIBLES),
-                        VIEW_W / 2, 185, 10, UI_DIM);
+    
+    if (t > 6.6f) {                                         /* a frase que fica na cabeça do jogador */
+        float pa = (t - 6.6f) > 1.0f ? 1.0f : (t - 6.6f);
+        gfx_text_center(e->punch, VIEW_W / 2, 150, 20, Fade(id == ENDING_CLARITY ? UI_GOOD : (id == ENDING_REPAIR ? UI_WARN : UI_BAD), pa));
     }
     if (t > 9.0f && ((int)(t * 2.0f)) % 2 == 0)
         gfx_text_center("Z / Enter: continuar", VIEW_W / 2, 200, 10, UI_ACCENT);

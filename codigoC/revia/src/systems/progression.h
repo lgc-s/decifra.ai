@@ -9,7 +9,7 @@
 #define NUM_ACTS 4
 #define NUM_CALLS 7
 #define NUM_QUIZ_SESSIONS 4
-#define QUIZ_LEN 10
+#define QUIZ_LEN 5
 #define NUM_COLLECTIBLES 12
 #define TRUST_START 50
 

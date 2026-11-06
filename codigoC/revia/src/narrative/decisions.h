@@ -16,6 +16,7 @@ typedef enum {
 typedef struct {
     const char *title;
     const char *lines[3];
+    const char *punch;        /* frase final, em destaque (cabe em uma linha de fonte 20) */
 } EndingInfo;
 
 int decisions_good_count(const Progress *p);          /* chamados em que escolheu a melhor opção */

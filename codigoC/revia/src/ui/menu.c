@@ -227,6 +227,7 @@ void pause_draw(const Game *g) {
 static const char *CREDITS[] = {
     "REV.IA - DECIFRA.IA", "",
     "Um jogo de plataforma sobre alfabetização algorítmica", "",
+        "Desenvolvido pela equipe", "#DECIFRA.IA", "", "CESAR School", "",
     "Conceito e história original", "Projeto Decifra.ai", "",
     "Reconstrução em plataforma 2D", "Linguagem C e Raylib", "",
     "Arte, animações e efeitos", "desenhados por código (pixel art procedural)", "",
@@ -249,7 +250,11 @@ void credits_draw(const Game *g) {
         int y = (int)(g->credits.y + (float)i * 14.0f);
         if (y < -12 || y > VIEW_H) continue;
         bool head = i == 0;
-        gfx_text_center(CREDITS[i], VIEW_W / 2, y, head ? 20 : 10, head ? UI_ACCENT : (i % 3 == 0 ? UI_TEXT : UI_DIM));
+        const char *line = CREDITS[i];
+        bool team = line[0] == '#';                 /* "#" no começo = nome da equipe, em destaque */
+        if (team) line++;
+        gfx_text_center(line, VIEW_W / 2, y, (head || team) ? 20 : 10,
+            head ? UI_ACCENT : (team ? UI_GOOD : (i % 3 == 0 ? UI_TEXT : UI_DIM)));
     }
     gfx_text_center("Enter: voltar ao menu", VIEW_W / 2, VIEW_H - 12, 10, UI_DIM);
 }

@@ -313,6 +313,68 @@ static void draw_exit(const Game *g, int ox, int oy) {
     }
 }
 
+/* Perigos móveis: bugs no chão e objetos que caem do céu (com aviso piscando). */
+static void draw_hazards(const Game *g, int ox, int oy) {
+    const Hazards *hz = &g->haz;
+    const Palette *pal = &g->pal;
+    float t = g->time;
+
+    for (int i = 0; i < hz->nrain; i++) {
+        const Rain *r = &hz->rain[i];
+        int cx = (int)r->x + ox, ly = (int)r->y_land + oy;
+        if (cx < -16 || cx > VIEW_W + 16) continue;
+
+        if (r->state == RAIN_WARN || r->state == RAIN_FALL) {          /* faixa por onde o objeto vai cair */
+            for (int yy = (int)r->y_start + oy; yy < ly - 8; yy += 6)
+                DrawRectangle(cx, yy, 1, 2, Fade(pal->spike, 0.22f));
+        }
+        if (r->state == RAIN_WARN) {                                    /* "!" piscando cada vez mais rápido */
+            float k = r->t / hz->warn_time;
+            if (((int)(t * (6.0f + 12.0f * k))) % 2 == 0) {
+                DrawRectangle(cx - 5, ly - 2, 10, 2, pal->spike);
+                DrawRectangle(cx - 1, ly - 13, 2, 6, pal->spike);
+                DrawRectangle(cx - 1, ly - 5, 2, 2, pal->spike);
+            } else {
+                DrawRectangle(cx - 5, ly - 2, 10, 2, Fade(pal->spike, 0.35f));
+            }
+        }
+        if (r->state == RAIN_FALL) {                                    /* objeto com rastro */
+            int px = cx - 3, py = (int)r->y + oy;
+            for (int k = 1; k <= 3; k++) DrawRectangle(cx - 1, py - k * 5, 2, 3, Fade(pal->spike, 0.35f - 0.09f * (float)k));
+            DrawRectangle(px, py, 6, 7, pal->spike);
+            DrawRectangle(px, py, 6, 1, shade(pal->spike, 1.5f));
+            DrawRectangle(px + 1, py + 2, 1, 1, WHITE);                 /* "x" de erro */
+            DrawRectangle(px + 4, py + 2, 1, 1, WHITE);
+            DrawRectangle(px + 2, py + 3, 2, 1, WHITE);
+            DrawRectangle(px + 1, py + 4, 1, 1, WHITE);
+            DrawRectangle(px + 4, py + 4, 1, 1, WHITE);
+        }
+        if (r->state == RAIN_LAND) {                                    /* impacto */
+            int sp = 2 + (int)(r->t * 30.0f);
+            DrawRectangle(cx - sp - 3, ly - 2, 3, 1, Fade(pal->spike, 0.7f));
+            DrawRectangle(cx + sp, ly - 2, 3, 1, Fade(pal->spike, 0.7f));
+            DrawRectangle(cx - 2, ly - 3, 4, 1, Fade(pal->spike, 0.5f));
+        }
+    }
+
+    for (int i = 0; i < hz->nbugs; i++) {
+        const Bug *b = &hz->bugs[i];
+        int bx = (int)b->x + ox, by = (int)b->y + oy;
+        if (bx < -12 || bx > VIEW_W + 12) continue;
+        int step = ((int)(t * 8.0f)) % 2;
+        Color body = pal->spike, dark = shade(body, 0.55f);
+        DrawRectangle(bx + 1, by - 6, 6, 5, body);                      /* corpo */
+        DrawRectangle(bx, by - 5, 8, 3, body);
+        DrawRectangle(bx + 1, by - 6, 6, 1, shade(body, 1.4f));
+        int ex = b->dir > 0 ? bx + 5 : bx + 1;                          /* olhos olham para onde anda */
+        DrawRectangle(ex, by - 5, 2, 2, WHITE);
+        DrawRectangle(ex + (b->dir > 0 ? 1 : 0), by - 5, 1, 1, BLACK);
+        DrawRectangle(b->dir > 0 ? bx + 7 : bx, by - 8, 1, 2, dark);    /* antena */
+        for (int k = 0; k < 3; k++)                                     /* pernas */
+            DrawRectangle(bx + 1 + k * 3, by - 1, 1, 1 + ((k + step) % 2), dark);
+    }
+}
+
 /* ------------------------------------------------------------------ */
 /* Protagonista                                                        */
 /* ------------------------------------------------------------------ */
@@ -421,6 +483,8 @@ void draw_world(const Game *g) {
         draw_interactable(g, &lv->interactables[i], i == g->ev.near_interact && g->state == ST_PLAY, ox, oy);
     for (int i = 0; i < lv->ncrystals; i++) draw_crystal(pal, &lv->crystals[i], ox, oy, g->time);
     for (int i = 0; i < lv->ncollectibles; i++) draw_collectible(pal, &lv->collectibles[i], ox, oy, g->time);
+
+    draw_hazards(g, ox, oy);
 
     draw_player(&g->player, pal, g->time, ox, oy);
     fx_draw(&g->fx, ox, oy);
