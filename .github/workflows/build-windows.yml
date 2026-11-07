@@ -30,11 +30,17 @@ jobs:
 
       - name: Montar a pasta do jogo
         run: |
+          ls -la build
           mkdir -p ../../dist/REVIA
           cp build/revia.exe ../../dist/REVIA/
           cp -r levels ../../dist/REVIA/
-          cp -r assets ../../dist/REVIA/
-          ldd build/revia.exe | grep -i ucrt64 | awk '{print $3}' | xargs -I{} cp {} ../../dist/REVIA/
+          cp -r assets ../../dist/REVIA/ || true
+          ldd build/revia.exe | tee /tmp/ldd.txt
+          for dll in $(awk '/ucrt64/ {print $3}' /tmp/ldd.txt); do
+            cp "$dll" ../../dist/REVIA/ || true
+          done
+          cp /ucrt64/bin/libraylib*.dll ../../dist/REVIA/ 2>/dev/null || true
+          ls -la ../../dist/REVIA
 
       - uses: actions/upload-artifact@v4
         with:
