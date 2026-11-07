@@ -101,7 +101,14 @@ O design do jogo é guiado por dois perfis-alvo principais:
 - Salvamento de progresso e feedback para todas as respostas do usuário, corretas ou não
 - Compatível com Windows
 - Pontuação final de proficiência baseada em tempo de conclusão e quantidade de erros, gerando um arquivo de certificação de conclusão
+---
+## Como jogar (Windows)
 
+1. Abra a página *Releases* deste repositório e baixe o arquivo .zip da versão mais recente.
+2. Extraia a pasta *inteira* (não mova o revia.exe sozinho).
+3. Dê dois cliques em revia.exe.
+
+Controles: setas ou A/D para mover, Z / Espaço para pular, X ou Shift para o dash, C para escalar, E / Enter para interagir, Esc para pausar.
 ---
 
 ## Stack técnica
