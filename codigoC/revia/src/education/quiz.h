@@ -35,6 +35,9 @@ typedef struct {
 } QuizRun;
 
 void quiz_start(QuizRun *r, int session, uint32_t seed);
+/* Igual a quiz_start, mas a dificuldade do jogo (0 normal, 1 assistido, 2 desafio) muda o sorteio:
+ * assistido sorteia entre as questões mais fáceis, desafio entre as mais difíceis. */
+void quiz_start_diff(QuizRun *r, int session, uint32_t seed, int difficulty);
 const QuizQuestion *quiz_current(const QuizRun *r);
 const char *quiz_option_text(const QuizRun *r, int display_idx);
 int  quiz_correct_display_index(const QuizRun *r);

@@ -44,7 +44,7 @@ static float density(int act, bool rain) {
 }
 
 static int count_for(const Level *lv, bool rain, Difficulty diff, int cap) {
-    float scale = diff == DIFF_ASSIST ? 0.5f : (diff == DIFF_CHALLENGE ? 1.5f : 1.0f);
+    float scale = diff == DIFF_ASSIST ? 0.5f : (diff == DIFF_CHALLENGE ? 1.6f : 1.0f);
     int n = (int)((float)lv->width * density(lv->act, rain) / 100.0f * scale + 0.5f);
     if (n < 1) n = 1;
     return n > cap ? cap : n;
@@ -52,7 +52,9 @@ static int count_for(const Level *lv, bool rain, Difficulty diff, int cap) {
 
 void hazards_init(Hazards *hz, const Level *lv, Difficulty diff) {
     memset(hz, 0, sizeof *hz);
-    hz->warn_time = diff == DIFF_ASSIST ? 1.5f : (diff == DIFF_CHALLENGE ? 0.7f : 1.0f);
+    hz->warn_time  = diff == DIFF_ASSIST ? 1.5f : (diff == DIFF_CHALLENGE ? 0.6f : 1.0f);
+    hz->fall_max   = diff == DIFF_ASSIST ? 200.0f : (diff == DIFF_CHALLENGE ? 260.0f : 230.0f);
+    hz->wait_scale = diff == DIFF_ASSIST ? 1.3f : (diff == DIFF_CHALLENGE ? 0.75f : 1.0f);
 
     /* colunas onde nada é colocado: início, checkpoints, saída, terminais, cristais */
     bool prot[LEVEL_MAX_W];
@@ -134,7 +136,7 @@ void hazards_init(Hazards *hz, const Level *lv, Difficulty diff) {
     }
     int nb = count_for(lv, false, diff, HZ_MAX_BUGS);
     if (nb > nseg) nb = nseg;
-    float base = diff == DIFF_ASSIST ? 18.0f : (diff == DIFF_CHALLENGE ? 38.0f : 28.0f);
+    float base = diff == DIFF_ASSIST ? 18.0f : (diff == DIFF_CHALLENGE ? 40.0f : 28.0f);
     for (int k = 0; k < nb; k++) {
         const Seg *sg = &segs[(k * nseg + nseg / 2) / nb];
         Bug *b = &hz->bugs[hz->nbugs++];
@@ -185,7 +187,7 @@ void hazards_update(Hazards *hz, const Level *lv, Player *p, float dt, HazardEve
         case RAIN_FALL: {
             r->t += dt;
             float v = 70.0f + 300.0f * r->t;                 /* acelera até uma velocidade máxima */
-            if (v > 230.0f) v = 230.0f;
+            if (v > hz->fall_max) v = hz->fall_max;
             r->y += v * dt;
             if (alive && overlap(r->x - RAIN_W * 0.5f, r->y, RAIN_W, RAIN_H, hb)) {
                 player_kill(p);
@@ -203,7 +205,7 @@ void hazards_update(Hazards *hz, const Level *lv, Player *p, float dt, HazardEve
             r->t += dt;
             if (r->t >= 0.30f) {
                 r->state = RAIN_WAIT; r->t = 0;
-                r->wait = rndf(&r->rng, 1.6f, 3.2f);
+                r->wait = rndf(&r->rng, 1.6f, 3.2f) * hz->wait_scale;
             }
             break;
         default: r->state = RAIN_WAIT; break;

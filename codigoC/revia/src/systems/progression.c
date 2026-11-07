@@ -72,6 +72,7 @@ void progress_complete_act(Progress *p, int act) {
         if (p->unlocked_act < act + 1) p->unlocked_act = act + 1;
         if (p->current_act < act + 1) p->current_act = act + 1;   /* nunca retrocede o "continuar" */
     }
+    p->checkpoint = 0;                       /* o próximo ato começa do início */
 }
 
 const char *act_title(int act) {

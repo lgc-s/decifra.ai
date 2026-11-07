@@ -174,16 +174,24 @@ static uint32_t rng_next(uint32_t *s) {
     return *s >> 8;
 }
 
-void quiz_start(QuizRun *r, int session, uint32_t seed) {
+void quiz_start(QuizRun *r, int session, uint32_t seed) { quiz_start_diff(r, session, seed, 0); }
+
+void quiz_start_diff(QuizRun *r, int session, uint32_t seed, int difficulty) {
     memset(r, 0, sizeof *r);
     r->session = session;
     r->rng = seed ? seed : 12345u;
 
-       /* Sorteia QUIZ_LEN questões distintas do banco e as põe em ordem crescente de dificuldade. */
+    /* O banco está em ordem crescente de dificuldade. Assistido (1) usa as 9 mais fáceis,
+     * desafio (2) usa as 9 mais difíceis e o normal usa todas as 12. */
+    int lo = 0, n = QUIZ_POOL;
+    if (difficulty == 1) n = QUIZ_POOL - 3;
+    else if (difficulty == 2) { lo = 3; n = QUIZ_POOL - 3; }
+
+    /* Sorteia QUIZ_LEN questões distintas dessa faixa e as põe em ordem crescente de dificuldade. */
     int idx[QUIZ_POOL];
-    for (int i = 0; i < QUIZ_POOL; i++) idx[i] = i;
+    for (int i = 0; i < n; i++) idx[i] = lo + i;
     for (int i = 0; i < QUIZ_LEN; i++) {                     /* Fisher-Yates parcial */
-        int j = i + (int)(rng_next(&r->rng) % (uint32_t)(QUIZ_POOL - i));
+        int j = i + (int)(rng_next(&r->rng) % (uint32_t)(n - i));
         int t = idx[i]; idx[i] = idx[j]; idx[j] = t;
     }
     for (int i = 1; i < QUIZ_LEN; i++) {                     /* ordena os sorteados */

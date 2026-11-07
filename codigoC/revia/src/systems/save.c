@@ -57,6 +57,7 @@ static bool valid_ranges(const Progress *p) {
     if (p->difficulty < 0 || p->difficulty > 2) return false;
     if (p->volume < 0 || p->volume > 10) return false;
     if (p->ending < -1 || p->ending > 3) return false;
+    if (p->character >= NUM_CHARACTERS) return false;
     for (int i = 0; i < NUM_CALLS; i++)
         if (p->call_choice[i] < -1 || p->call_choice[i] > 3) return false;
     return true;

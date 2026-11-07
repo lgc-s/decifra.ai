@@ -75,6 +75,17 @@ void ending_draw(const Game *g) {
         float pa = (t - 6.6f) > 1.0f ? 1.0f : (t - 6.6f);
         gfx_text_center(e->punch, VIEW_W / 2, 150, 20, Fade(id == ENDING_CLARITY ? UI_GOOD : (id == ENDING_REPAIR ? UI_WARN : UI_BAD), pa));
     }
+
+    if (t > 8.0f) {
+        char tm[16];
+        format_time(p->play_time, tm, sizeof tm);
+        gfx_text_center(TextFormat("Confiança Pública: %d   Decisões acertadas: %d/%d   Viés %s",
+                                   p->trust, decisions_good_count(p), NUM_CALLS, p->bias_solved ? "corrigido" : "não corrigido"),
+                        VIEW_W / 2, 172, 10, UI_WARN);
+        gfx_text_center(TextFormat("Tempo: %s   Quedas: %u   Chips: %d/%d", tm, p->deaths, progress_collected_count(p), NUM_COLLECTIBLES),
+                        VIEW_W / 2, 185, 10, UI_DIM);
+    }
+
     if (t > 9.0f && ((int)(t * 2.0f)) % 2 == 0)
         gfx_text_center("Z / Enter: continuar", VIEW_W / 2, 200, 10, UI_ACCENT);
 }

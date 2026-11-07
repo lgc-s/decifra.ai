@@ -23,7 +23,8 @@
 
 typedef enum {
     ST_MENU, ST_LEVELSELECT, ST_SETTINGS, ST_CODEX, ST_CREDITS,
-    ST_PLAY, ST_DIALOGUE, ST_CALL, ST_QUIZ, ST_BIAS, ST_PAUSE, ST_ACTDONE, ST_ENDING
+    ST_PLAY, ST_DIALOGUE, ST_CALL, ST_QUIZ, ST_BIAS, ST_PAUSE, ST_ACTDONE, ST_ENDING,
+    ST_CHARACTER                      /* escolha do personagem (novo jogo) */
 } GameState;
 
 typedef enum { FA_NONE, FA_LOAD_ACT, FA_TO_MENU, FA_TO_STATE } FadeAction;
@@ -60,7 +61,7 @@ typedef struct Game {
     char load_error[200];
 
     /* menus */
-    int menu_cursor, select_cursor, settings_cursor, pause_cursor, codex_cursor;
+    int menu_cursor, select_cursor, settings_cursor, pause_cursor, codex_cursor, char_cursor;
     bool confirm_new;
     float confirm_new_t;
 
@@ -83,7 +84,7 @@ void game_toast(Game *g, const char *fmt, ...);
 void game_save(Game *g);
 void game_apply_settings(Game *g);
 void game_fade_to(Game *g, FadeAction action, int arg);
-void game_new_game(Game *g);
+void game_new_game(Game *g, int character);      /* começa do zero com o personagem escolhido */
 void game_continue(Game *g);
 void game_start_act(Game *g, int act);          /* com fade */
 void game_start_dialogue(Game *g, int id);

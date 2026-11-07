@@ -14,7 +14,7 @@ void draw_world(const struct Game *g);
 /* Cena de fundo para menus: fundo rolando devagar, partículas e o protagonista. */
 void draw_menu_scene(const struct Game *g, float scroll);
 
-void draw_player(const Player *p, const Palette *pal, float t, int ox, int oy);
+void draw_player(const Player *p, const Palette *pal, int character, float t, int ox, int oy);
 void draw_vignette(void);
 void draw_glow(int cx, int cy, float radius, Color c, float strength);
 

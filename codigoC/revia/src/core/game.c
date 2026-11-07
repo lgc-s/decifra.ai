@@ -89,7 +89,13 @@ static bool load_act(Game *g, int act) {
     g->playing_act = act;
     entities_prepare(&g->level, g->prog.collected);
     hazards_init(&g->haz, &g->level, (Difficulty)g->prog.difficulty);
-    player_reset(&g->player, g->level.spawn);
+       /* "Continuar" volta ao último checkpoint do ato em andamento (e não ao início da fase). */
+    int cp = g->prog.checkpoint;
+    if (cp > 0 && cp <= g->level.ncheckpoints && act == g->prog.current_act) {
+        g->level.active_checkpoint = cp - 1;
+        g->level.respawn_pos = g->level.checkpoints[cp - 1].respawn;
+    }
+    player_reset(&g->player, g->level.respawn_pos);
     g->player.stamina = g->tuning.stamina_max;
     camera_snap(&g->cam, &g->level, (Vec2f){ g->player.pos.x, g->player.pos.y });
     fx_clear(&g->fx);
@@ -128,11 +134,12 @@ static void run_fade_action(Game *g) {
 
 void game_start_act(Game *g, int act) { game_fade_to(g, FA_LOAD_ACT, act); }
 
-void game_new_game(Game *g) {
+void game_new_game(Game *g, int character) {
     int diff = g->prog.difficulty, vol = g->prog.volume;
     progress_init(&g->prog);
     g->prog.difficulty = diff;
     g->prog.volume = vol;
+    g->prog.character = (uint8_t)(character >= 0 && character < NUM_CHARACTERS ? character : 0);
     game_apply_settings(g);
     game_save(g);
     game_start_act(g, 1);
@@ -192,7 +199,7 @@ void game_start_call(Game *g, int id) {
 void game_start_quiz(Game *g, int session) {
     if (session < 0 || session >= NUM_QUIZ_SESSIONS) return;
     uint32_t seed = (uint32_t)(GetTime() * 1000.0) * 2654435761u + (uint32_t)g->prog.quiz_attempts[session] * 7919u + 17u;
-    quiz_start(&g->quiz.run, session, seed);
+    quiz_start_diff(&g->quiz.run, session, seed, g->prog.difficulty);
     g->quiz.cursor = 0; g->quiz.phase = 0; g->quiz.t = 0; g->quiz.delta = 0; g->quiz.first = false;
     g->state = ST_QUIZ;
     audio_play(&g->audio, SFX_CONFIRM);
@@ -264,6 +271,7 @@ static void handle_entity_events(Game *g) {
         audio_play(&g->audio, SFX_CHECKPOINT);
         fx_burst(&g->fx, p->pos.x + 3, p->pos.y, 14, 60, g->pal.accent, 0.6f);
         game_toast(g, "Checkpoint");
+        g->prog.checkpoint = (uint8_t)(g->level.active_checkpoint + 1);
         game_save(g);
     }
     if (ev->crystal) {
@@ -502,6 +510,7 @@ static void game_update(Game *g, float dt) {
     case ST_PAUSE:       pause_update(g, dt); break;
     case ST_ACTDONE:     actdone_update(g, dt); break;
     case ST_ENDING:      ending_update(g, dt); break;
+    case ST_CHARACTER:   character_update(g, dt); break;
     }
     audio_update(&g->audio);
 }
@@ -543,6 +552,7 @@ static void game_draw(Game *g) {
     case ST_PAUSE:       pause_draw(g); break;
     case ST_ACTDONE:     actdone_draw(g); break;
     case ST_ENDING:      ending_draw(g); break;
+    case ST_CHARACTER:   character_draw(g); break;
     case ST_PLAY: break;
     }
     if (s != ST_MENU || g->toast_t > 0) hud_draw_toast(g);

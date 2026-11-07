@@ -11,6 +11,7 @@
 #define NUM_QUIZ_SESSIONS 4
 #define QUIZ_LEN 5
 #define NUM_COLLECTIBLES 12
+#define NUM_CHARACTERS 4          /* personagens jogáveis (render/character.c) */
 #define TRUST_START 50
 
 /* Tudo o que é salvo em disco. Só tipos de tamanho fixo (layout estável). */
@@ -23,6 +24,7 @@ typedef struct {
     int32_t  ending;                            /* final alcançado, -1 se nenhum */
     uint32_t calls_done;                        /* bitmask de chamados concluídos */
     int8_t   call_choice[NUM_CALLS];            /* decisão tomada em cada chamado, -1 = nenhuma */
+    uint8_t  character;                         /* personagem escolhido (0..NUM_CHARACTERS-1) */
     uint32_t quiz_done;                         /* bitmask de sessões concluídas */
     uint16_t quiz_correct_mask[NUM_QUIZ_SESSIONS]; /* acertos da última tentativa (bit por questão) */
     uint8_t  quiz_attempts[NUM_QUIZ_SESSIONS];
@@ -30,7 +32,7 @@ typedef struct {
     uint8_t  bias_played;
     uint8_t  bias_solved;
     uint8_t  evidence;                          /* bitmask das 3 evidências do Ato 3 */
-    uint8_t  reserved;
+    uint8_t  checkpoint;                        /* checkpoint ativo no ato atual (índice + 1; 0 = início da fase) */
     uint32_t deaths;
     float    play_time;                         /* segundos */
 } Progress;

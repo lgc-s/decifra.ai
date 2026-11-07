@@ -15,6 +15,9 @@ void settings_update(Game *g, float dt);   void settings_draw(const Game *g);
 void pause_update(Game *g, float dt);      void pause_draw(const Game *g);
 void credits_update(Game *g, float dt);    void credits_draw(const Game *g);
 
+/* character_ui.c */
+void character_update(Game *g, float dt);  void character_draw(const Game *g);
+
 /* dialog_ui.c, call_ui.c, quiz_ui.c, bias_ui.c, codex_ui.c, ending.c */
 void dialogue_update(Game *g, float dt);   void dialogue_draw(const Game *g);
 void call_update(Game *g, float dt);       void call_draw(const Game *g);

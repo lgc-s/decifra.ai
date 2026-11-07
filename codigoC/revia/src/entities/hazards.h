@@ -45,6 +45,8 @@ typedef struct {
     Bug  bugs[HZ_MAX_BUGS]; int nbugs;
     Rain rain[HZ_MAX_RAIN]; int nrain;
     float warn_time;     /* segundos de aviso antes da queda (depende da dificuldade) */
+    float fall_max;      /* velocidade máxima da queda, px/s (depende da dificuldade) */
+    float wait_scale;    /* multiplica o tempo entre quedas (menor = mais frequente) */
 } Hazards;
 
 typedef struct {

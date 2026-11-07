@@ -501,6 +501,38 @@ static void test_save(void) {
     CHECK(!save_read(&c, "nao_existe.dat"), "save inexistente");
 }
 
+static void test_difficulty_and_character(void) {
+    printf("[dificuldade e personagem]\n");
+    /* assistido sorteia só entre as 9 questões mais fáceis, desafio só entre as 9 mais difíceis */
+    for (int s = 0; s < NUM_QUIZ_SESSIONS; s++) {
+        for (uint32_t seed = 1; seed <= 50; seed++) {
+            QuizRun e, h;
+            quiz_start_diff(&e, s, seed, 1);
+            quiz_start_diff(&h, s, seed, 2);
+            for (int i = 0; i < QUIZ_LEN; i++) {
+                CHECK(e.pool_idx[i] >= 0 && e.pool_idx[i] <= 8, "assistido fora da faixa facil (%d)", e.pool_idx[i]);
+                CHECK(h.pool_idx[i] >= 3 && h.pool_idx[i] <= 11, "desafio fora da faixa dificil (%d)", h.pool_idx[i]);
+                if (i > 0) {
+                    CHECK(e.pool_idx[i] > e.pool_idx[i - 1], "assistido: questoes repetidas ou fora de ordem");
+                    CHECK(h.pool_idx[i] > h.pool_idx[i - 1], "desafio: questoes repetidas ou fora de ordem");
+                }
+            }
+        }
+    }
+    QuizRun a, b;
+    quiz_start(&a, 1, 9); quiz_start_diff(&b, 1, 9, 0);
+    CHECK(memcmp(&a, &b, sizeof a) == 0, "dificuldade normal deveria ser igual ao quiz_start");
+
+    /* personagem fora da faixa é rejeitado no carregamento */
+    Progress p; progress_init(&p);
+    CHECK(p.character == 0, "personagem inicial deveria ser 0");
+    p.character = NUM_CHARACTERS;
+    CHECK(save_write(&p, "test_save.dat"), "falha ao salvar");
+    Progress q; progress_init(&q);
+    CHECK(!save_read(&q, "test_save.dat"), "personagem invalido deveria ser rejeitado");
+    remove("test_save.dat");
+}
+
 int main(void) {
     test_levels();
     test_jump();

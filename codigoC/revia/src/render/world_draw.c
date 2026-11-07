@@ -2,6 +2,7 @@
 #include "core/game.h"
 #include "narrative/dialogue.h"
 #include "render/gfx.h"
+#include "render/character.h"
 #include "world/collision.h"
 
 #include <math.h>
@@ -379,13 +380,14 @@ static void draw_hazards(const Game *g, int ox, int oy) {
 /* Protagonista                                                        */
 /* ------------------------------------------------------------------ */
 
-void draw_player(const Player *p, const Palette *pal, float t, int ox, int oy) {
+void draw_player(const Player *p, const Palette *pal, int character, float t, int ox, int oy){
     if (p->state == PS_DEAD) return;
     int x = ifl(p->pos.x) + ox, y = ifl(p->pos.y) + oy;
     int f = p->facing >= 0 ? 1 : -1;
-    const Color coat = { 236, 240, 250, 255 }, coat2 = { 190, 200, 224, 255 };
-    const Color pants = { 44, 52, 92, 255 }, skin = { 242, 198, 160, 255 };
-    const Color hair = { 72, 46, 58, 255 }, eye = { 24, 24, 40, 255 };
+    const CharacterStyle *cs = character_style(character);       /* cores do personagem escolhido */
+    const Color coat = cs->coat, coat2 = cs->coat2;
+    const Color pants = cs->pants, skin = cs->skin;
+    const Color hair = cs->hair, eye = { 24, 24, 40, 255 };
     Color badge = p->dash_ready ? pal->accent : (Color){ 130, 110, 150, 255 };
 
 #define R(rx, ry, w, h, col) DrawRectangle(f > 0 ? x + (rx) : x + 6 - (rx) - (w), y + (ry), (w), (h), (col))
@@ -486,7 +488,7 @@ void draw_world(const Game *g) {
 
     draw_hazards(g, ox, oy);
 
-    draw_player(&g->player, pal, g->time, ox, oy);
+    draw_player(&g->player, pal, g->prog.character, g->time, ox, oy);
     fx_draw(&g->fx, ox, oy);
     draw_vignette();
 }
@@ -505,7 +507,7 @@ void draw_menu_scene(const Game *g, float scroll) {
     p.on_ground = true;
     p.vel.x = 0;
     p.dash_ready = true;
-    draw_player(&p, pal, g->time, 0, 0);
+    draw_player(&p, pal, g->prog.character, g->time, 0, 0);
     fx_draw(&g->fx, 0, 0);
     draw_vignette();
 }

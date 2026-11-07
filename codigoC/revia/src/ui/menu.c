@@ -61,7 +61,8 @@ void menu_update(Game *g, float dt) {
             game_toast(g, "Isso apaga o progresso salvo. Confirme de novo para começar.");
         } else {
             g->confirm_new = false;
-            game_new_game(g);
+            g->char_cursor = g->prog.character;
+            game_fade_to(g, FA_TO_STATE, ST_CHARACTER);      /* escolhe o personagem antes de começar */
         }
         break;
     case M_SELECT: g->state = ST_LEVELSELECT; g->select_cursor = g->prog.unlocked_act - 1; break;
@@ -168,9 +169,9 @@ void settings_update(Game *g, float dt) {
 
 static const char *difficulty_desc(int d) {
     switch (d) {
-    case DIFF_ASSIST: return "Mais tolerância nos comandos, mais energia de escalada, dash ilimitado.";
-    case DIFF_CHALLENGE: return "Tolerância mínima nos comandos e menos energia de escalada.";
-    default: return "Equilíbrio de referência.";
+    case DIFF_ASSIST: return "Mais tolerância nos comandos, dash ilimitado, menos obstáculos e perguntas mais fáceis.";
+    case DIFF_CHALLENGE: return "Pouca tolerância, mais obstáculos (e mais rápidos) e perguntas mais difíceis.";
+    default: return "Equilíbrio de referência: obstáculos e perguntas de dificuldade média.";
     }
 }
 
@@ -227,7 +228,10 @@ void pause_draw(const Game *g) {
 static const char *CREDITS[] = {
     "REV.IA - DECIFRA.IA", "",
     "Um jogo de plataforma sobre alfabetização algorítmica", "",
-        "Desenvolvido pela equipe", "#DECIFRA.IA", "", "CESAR School", "",
+    "Desenvolvido pela equipe", "#DECIFRA.IA", "", "Turma ADS - Embarque Digital", "CESAR School", "",
+    "Integrantes",
+    "@Antônio Neto", "@Carlos Daniel", "@Davi Braz", "@Davi Pereira",
+    "@João Victor", "@José Nalbert", "@Kauã Mateus", "@Luis Silva", "",
     "Conceito e história original", "Projeto Decifra.ai", "",
     "Reconstrução em plataforma 2D", "Linguagem C e Raylib", "",
     "Arte, animações e efeitos", "desenhados por código (pixel art procedural)", "",
@@ -252,9 +256,10 @@ void credits_draw(const Game *g) {
         bool head = i == 0;
         const char *line = CREDITS[i];
         bool team = line[0] == '#';                 /* "#" no começo = nome da equipe, em destaque */
-        if (team) line++;
+        bool name = line[0] == '@';                 /* "@" no começo = nome de integrante */
+        if (team || name) line++;
         gfx_text_center(line, VIEW_W / 2, y, (head || team) ? 20 : 10,
-            head ? UI_ACCENT : (team ? UI_GOOD : (i % 3 == 0 ? UI_TEXT : UI_DIM)));
+                        head ? UI_ACCENT : (team ? UI_GOOD : (name ? UI_TEXT : UI_DIM)));
     }
     gfx_text_center("Enter: voltar ao menu", VIEW_W / 2, VIEW_H - 12, 10, UI_DIM);
 }
