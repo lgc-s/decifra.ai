@@ -5,15 +5,9 @@ Departamento de Alfabetização Algorítmica de uma cidade em que a IA generalis
 crédito, notícias e saúde sem que ninguém entenda como. Investigue, ensine e tome decisões que mexem na
 **Confiança Pública**.
 
-> **Importante — leia antes de usar**
-> - O repositório original (`lgc-s/decifra.ai`) **não foi analisado**: ele não pôde ser anexado durante a
->   criação. Textos de diálogos, chamados, perguntas e finais são **originais deste projeto**, escritos a
->   partir do briefing (preservando NÓVA, o Decifrador, os 4 atos, a regra das 10 perguntas, o minigame de
->   viés e a Confiança Pública). Para trazer o conteúdo original, edite apenas `src/narrative/*.c` e
->   `src/education/quiz.c` / `codex.c`: nenhuma outra parte do código depende do texto.
-> - O jogo foi compilado contra o `raylib.h` oficial 5.0 (sem avisos, `-Wall -Wextra -Wpedantic`) e executado
->   por cerca de 30 minutos simulados, com entradas aleatórias, usando uma Raylib "de teste" (sem janela). **Não foi ligado nem jogado com a Raylib real
->   com janela e som** no ambiente em que foi criado. Veja "Verificação" abaixo.
+> **Versão 3.0.** Os textos de diálogos, chamados, perguntas e finais são originais deste projeto. Para
+> alterar o conteúdo, edite apenas `src/narrative/*.c` e `src/education/quiz.c` / `codex.c`: nenhuma outra
+> parte do código depende do texto.
 
 ## Como jogar
 
@@ -34,7 +28,8 @@ Em menus: setas para navegar, Z/Enter confirma, X/Esc volta.
 - **Dash** direcional (recarrega ao tocar o chão ou em um **cristal**).
 - **Escalada** com energia limitada, **wall jump** e impulso automático ao chegar à borda.
 - **Coyote time**, **jump buffering**, correção de quina no teto, respawn rápido no checkpoint.
-- Dificuldades: **Normal**, **Assistido** (mais tolerância, mais energia, dash ilimitado) e **Desafio**.
+- Dificuldades: **Normal**, **Assistido** (mais tolerância, mais energia, dash ilimitado, menos obstáculos e
+  perguntas mais fáceis) e **Desafio** (menos tolerância, mais obstáculos e mais rápidos, perguntas mais difíceis).
 - Todas as constantes de física ficam em `src/core/config.h` (`PH_*`) e `config.c` (dificuldade).
 
 **Elementos de cenário que ensinam**
@@ -42,6 +37,11 @@ Em menus: setas para navegar, Z/Enter confirma, X/Esc volta.
 - Plataformas **ilusórias** que não sustentam = alucinações (Notícias).
 - Espinhos = erros que custam caro (Saúde).
 - **Chips de dados** dourados (3 por ato) desbloqueiam verbetes na **Enciclopédia**.
+- **Bugs** andam pelo chão (é preciso pular por cima) e **dados corrompidos** caem do céu depois de um aviso
+  piscando no chão. Tocar neles faz o Decifrador voltar ao último checkpoint.
+
+**Personagens**: ao escolher "Novo jogo" abre a seleção entre **Alex, Bia, Caio e Dani** (muda as cores do
+sprite). O personagem fica salvo com o progresso. O "Continuar" retorna ao **último checkpoint** da fase.
 
 ## Estrutura da campanha
 
@@ -52,8 +52,10 @@ Em menus: setas para navegar, Z/Enter confirma, X/Esc volta.
 | 3 O Escândalo | Arquivo Sul | 3 evidências, **minigame de viés**, chamado decisivo, **Avaliação 3** |
 | 4 Desfecho | Salão da Cidade | 2 decisões finais, **Avaliação 4**, e um dos **4 finais** conforme a Confiança Pública |
 
-- **Avaliações**: 4 sessões de 10 perguntas, dificuldade crescente. **Todas as 10 precisam estar certas**; ao
-  errar, a sessão recomeça com outras perguntas do banco e alternativas embaralhadas.
+- **Avaliações**: 4 sessões de 5 perguntas, dificuldade crescente (a dificuldade do jogo muda o sorteio:
+  Assistido usa as mais fáceis, Desafio as mais difíceis). Cada acerto vale **+2** e cada erro **−3** de
+  Confiança Pública. Errar **não** reinicia: a pergunta conta como errada e a sessão segue até o fim, quando
+  a soma é aplicada (só na primeira vez que a avaliação é concluída).
 - **Chamados**: contexto, problema, alternativas, consequência, explicação educativa e impacto na confiança.
 - **Minigame de viés**: monte o conjunto de treino (quantidade por bairro, uso de *bairro*, uso de *CEP*,
   correção dos rótulos históricos) e execute a simulação. O CEP é um *proxy*: tirar só a coluna "bairro" não
@@ -139,18 +141,17 @@ Os mapas ficam em `levels/actN/actN.txt` (formato documentado em `src/world/leve
 ## Verificação
 
 ```bash
-make test    # 280+ verificações de lógica, com AddressSanitizer/UBSan (não precisa da Raylib)
+make test    # 3800+ verificações de lógica, com AddressSanitizer/UBSan (não precisa da Raylib)
 make smoke   # roda o jogo inteiro sem janela, 100 mil quadros de entradas aleatórias, com sanitizers
 ```
 O que `make test` cobre: carregamento das 4 fases, altura/pulo, coyote time, vão de 5 tiles, dash, cristais
 (vão de 12 tiles), escalada de 10 tiles, wall jump, espinhos, queda, plataformas que desmoronam, dificuldade,
-quiz (10 acertos, reprovação, variações), minigame de viés (5 configurações), progressão, finais e save
-(incluindo arquivo corrompido). `make smoke` visita todas as telas (incluindo os 4 atos, chamados, avaliações,
+quiz (acertos e erros somando a confiança, dificuldade, variações). `make smoke` visita todas as telas (incluindo os 4 atos, chamados, avaliações,
 minigame e finais), sem erros de memória.
 
 **Limitações conhecidas**
-- Não foi jogado com janela, GPU e som reais; a sensação do movimento foi validada por testes numéricos,
-  não por jogo. Ajuste `PH_*` em `config.h` conforme o gosto.
+- A sensação do movimento foi validada por testes numéricos e pelos testes de jogo da equipe. Ajuste `PH_*`
+  em `config.h` conforme o gosto.
 - As fases são **completáveis por construção** (o gerador limita vãos, subidas e dash) e foram testadas em
   trechos sintéticos, mas **nenhum jogador (humano ou bot) percorreu os mapas inteiros**.
 - A arte é procedural (pixel art desenhada por código) e o áudio é sintetizado por código. Não há sprites
