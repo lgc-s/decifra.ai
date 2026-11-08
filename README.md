@@ -1,10 +1,10 @@
 # Rev.IA — Decifra.IA
 
-> Um jogo de terminal sobre alfabetização em Inteligência Artificial.
+> Um jogo de plataforma 2D sobre alfabetização em Inteligência Artificial. **Versão 3.0**
 
-Rev.IA (nome do projeto acadêmico) é um jogo casual em modo texto/terminal cujo objetivo é ensinar, de forma prática e narrativa, como funcionam — e onde falham — os sistemas de Inteligência Artificial presentes no dia a dia: viés algorítmico, alucinações, decisões automatizadas e uso seguro de ferramentas de IA generativa.
+Rev.IA (nome do projeto acadêmico) é um jogo de plataforma 2D, feito em **C com Raylib**, cujo objetivo é ensinar, de forma prática e narrativa, como funcionam — e onde falham — os sistemas de Inteligência Artificial presentes no dia a dia: viés algorítmico, alucinações, decisões automatizadas e uso seguro de ferramentas de IA generativa.
 
-O jogo é desenvolvido como projeto da disciplina **Projetos 2** (2º período de ADS) da **CESAR School**, integrando também os componentes de Lógica, IHC/HCI e FDS/FP2.
+O jogo é desenvolvido como projeto da disciplina **Projetos 2** (2º período de ADS, turma **ADS - Embarque Digital**) da **CESAR School**, integrando também os componentes de Lógica, IHC/HCI e FDS/FP2.
 
 ---
 
@@ -12,7 +12,7 @@ O jogo é desenvolvido como projeto da disciplina **Projetos 2** (2º período d
 
 Você é recém-contratado(a) do **Departamento de Alfabetização Algorítmica** de uma cidade fictícia onde uma IA generalista chamada **NÓVA** foi implantada silenciosamente em quase todos os serviços públicos — trânsito, crédito, notícias, saúde. Ninguém entende bem como ela decide.
 
-Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar cidadãos que abrem chamados de reclamação sobre ela.
+Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar cidadãos que abrem chamados de reclamação sobre ela. Ao começar um novo jogo, você escolhe o seu personagem: **Alex, Bia, Caio ou Dani**.
 
 ### Equipe
 
@@ -59,20 +59,23 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 
 ### Estrutura narrativa em atos
 
-| Ato | Nome | Descrição |
+| Ato | Fase | Descrição |
 |---|---|---|
-| 1 | Onboarding | 4-5 missões de quiz conceitual (o que é IA, dados, treino) — tutorial disfarçado de capacitação obrigatória |
-| 2 | Rotina de chamados | O grosso do jogo: turnos diários com 1-3 chamados novos, misturando quiz e cenário de decisão, com fila de prioridade |
-| 3 | O escândalo | Um chamado revela viés discriminatório em um subsistema da NÓVA, disparando o mini-jogo de investigação forense |
-| 4 | Desfecho | O histórico de decisões (medidor de Confiança Pública) define um dos 3-4 finais possíveis |
+| 1 — Onboarding | Departamento | Tutorial disfarçado de capacitação: o jogador aprende os controles e os terminais explicam IA, dados e treinamento. Termina com a **Avaliação 1** |
+| 2 — Rotina de chamados | Distrito NÓVA (Trânsito, Crédito, Notícias, Saúde) | Quatro chamados de cidadãos, com cenários de decisão de custo/benefício não óbvio. Termina com a **Avaliação 2** |
+| 3 — O escândalo | Arquivo Sul | O jogador reúne 3 evidências de viés discriminatório, joga o **mini-jogo de viés** e toma a decisão do chamado decisivo. Termina com a **Avaliação 3** |
+| 4 — Desfecho | Salão da Cidade | Duas decisões finais e a **Avaliação 4**. A Confiança Pública define um dos **4 finais**: Cidade Decifrada, Reparo Lento, Desconfiança ou Silêncio |
 
 ### Mecânicas principais
 
-- **Manual de Treinamento** — quizzes conceituais que desbloqueiam níveis
-- **Chamados (tickets)** — cenários de decisão com 2-4 opções de resposta, cada uma com custo/benefício não óbvio
-- **Medidor de Confiança Pública (0-100)** — reflete o impacto acumulado das decisões do jogador
-- **Mini-jogo de viés** — o jogador monta um dataset de treino e observa o viés se manifestar nos resultados simulados
-- **Resumo do dia** — dashboard ASCII exibido a cada N chamados, reforçando a sensação de progresso salvo
+- **Plataforma com movimento preciso** — pulo de altura variável, dash em 8 direções, escalada com energia limitada e wall jump
+- **Obstáculos que ensinam** — plataformas que desmoronam (dados incompletos), plataformas ilusórias (alucinações), espinhos (erros que custam caro), *bugs* que andam pelo chão e *dados corrompidos* que caem do céu depois de um aviso
+- **Avaliações (quizzes conceituais)** — 4 sessões de 5 perguntas com dificuldade crescente. Cada acerto vale **+2** e cada erro vale **−3** de Confiança Pública; errar **não** reinicia a sessão, o jogador termina a avaliação e vê a soma ao final
+- **Chamados (tickets)** — cenários de decisão com 3-4 opções de resposta, cada uma com custo/benefício não óbvio e uma explicação educativa
+- **Medidor de Confiança Pública (0-100)** — reflete o impacto acumulado das decisões, das avaliações e do mini-jogo
+- **Mini-jogo de viés** — o jogador monta o conjunto de treino da NÓVA (casos do Bairro Sul, uso do bairro, uso do CEP, correção do histórico) e observa o viés se manifestar nos resultados simulados
+- **Enciclopédia** — chips de dados escondidos nas fases desbloqueiam verbetes sobre IA
+- **Personagens e dificuldades** — quatro personagens jogáveis e três dificuldades (**Normal**, **Assistido** e **Desafio**). Em dificuldades mais altas, as fases têm mais obstáculos, mais rápidos, e as perguntas sorteadas são mais difíceis
 
 ---
 
@@ -92,36 +95,58 @@ O design do jogo é guiado por dois perfis-alvo principais:
 - Narrativa com começo, meio e fim que gere engajamento
 - Interface simples e acessível, voltada também a públicos não-nativos digitais
 - Tutorial, créditos, configurações e dados salvos
-- Sessões de história entre as fases; gameplay primário baseado em desafios conceituais e contextuais
-- 3 setores narrativos e 4 sessões de perguntas (10 questões cada, dificuldade crescente)
-- Todas as 10 perguntas de uma fase devem estar corretas para avançar; em caso de erro, a fase reinicia com variações mantendo coerência narrativa
+- Escolha de personagem ao começar um novo jogo
+- Sessões de história entre as fases; gameplay primário baseado em plataforma e em desafios conceituais e contextuais
+- 4 atos (fases) e 4 sessões de perguntas (5 questões cada, dificuldade crescente)
+- Acertos aumentam a Confiança Pública e erros a reduzem; o jogador sempre termina a avaliação (não há reinício na pergunta 1)
+- Dificuldade selecionável (Normal, Assistido, Desafio), que altera os obstáculos das fases e a dificuldade das perguntas
 
 ### Requisitos Não Funcionais (RNF)
-- Desenvolvido em **C** (núcleo), visando estabilidade e ausência de conflitos técnicos
-- Salvamento de progresso e feedback para todas as respostas do usuário, corretas ou não
+- Desenvolvido em **C (C11)** com a biblioteca **Raylib**, visando estabilidade e ausência de conflitos técnicos
+- Salvamento de progresso (inclui o último checkpoint e o personagem) e feedback para todas as respostas do usuário, corretas ou não
 - Compatível com Windows
-- Pontuação final de proficiência baseada em tempo de conclusão e quantidade de erros, gerando um arquivo de certificação de conclusão
+- Tela de resultado final com Confiança Pública, decisões, tempo de jogo e quantidade de quedas
+
 ---
+
 ## Como jogar (Windows)
 
-1. Abra a página *Releases* deste repositório e baixe o arquivo .zip da versão mais recente.
-2. Extraia a pasta *inteira* (não mova o revia.exe sozinho).
-3. Dê dois cliques em revia.exe.
+1. Abra a página [**Releases**](https://github.com/lgc-s/decifra.ai/releases) deste repositório e baixe o arquivo `.zip` da versão mais recente.
+   Também é possível baixar o pacote mais novo na aba **Actions**, na última execução, em *Artifacts* → `REVIA-Windows`.
+2. Extraia a pasta **inteira** (não mova o `revia.exe` sozinho).
+3. Dê dois cliques em `revia.exe`.
 
-Controles: setas ou A/D para mover, Z / Espaço para pular, X ou Shift para o dash, C para escalar, E / Enter para interagir, Esc para pausar.
+| Ação | Teclado |
+|---|---|
+| Mover | Setas ou A / D |
+| Pular (segure para pular mais alto) | Z, Espaço ou K |
+| Dash (8 direções) | X, Shift ou J |
+| Agarrar a parede e escalar | C, Ctrl ou L |
+| Interagir (falar, atender, usar terminal) | E ou Enter |
+| Pausar | Esc ou P |
+| Tela cheia | F11 |
+
+Nos menus: setas para navegar, Z/Enter confirma, X/Esc volta. O jogo também aceita controle (gamepad).
+
 ---
 
 ## Stack técnica
 
-- **C** — núcleo do jogo (loop principal, terminal, persistência em arquivo binário)
-- **Haskell** — módulos de regras (lógica de decisão, cálculo de viés, mapeamento de finais)
-- Sem banco de dados: persistência via arquivo binário (struct serializada, com número mágico/checksum para validar integridade)
-- Sem engine gráfica nem multiplayer/rede — experiência 100% baseada em terminal
+- **C (C11)** — jogo inteiro: laço de passo fixo, física, fases, narrativa e interface
+- **Raylib** — janela, entrada, desenho e áudio. A arte (pixel art) e o áudio são gerados por código
+- **Make / CMake** — compilação. As regras do jogo ficam separadas da interface e têm testes automáticos sem janela (`make test`)
+- Sem banco de dados: persistência via arquivo binário (struct serializada, com número mágico e checksum para validar integridade)
+- **GitHub Actions** — compila o jogo para Windows a cada push e gera o pacote `REVIA-Windows`
+- Sem multiplayer nem rede
 
 ---
+
 ## Como Instalar e Rodar
-📖 [Acesse o Guia Passo a Passo de Clonagem e Execução](./C/como%20fazer%20o%20c%C3%B3digo%20rodar/PASSO_A_PASSO_CLONAR_E_RODAR.txt)
---- 
+
+📖 [Acesse o guia completo de compilação e execução (Windows, Linux e macOS)](./codigoC/revia/docs/README.md)
+
+---
+
 ## Diagramas de Atividades
 
 📊 [Ver diagramas de atividades de cada história de usuário](./diagrama-atividades.pdf)
@@ -155,5 +180,4 @@ O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversati
 
 ## Screencast Sprint 1
 
-https://www.youtube.com/watch?v=LN18BlokvUo&authuser=0/>
-
+https://www.youtube.com/watch?v=LN18BlokvUo
