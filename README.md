@@ -84,7 +84,7 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | :--- | :--- | :--- | :--- |
 | **João e Carlos Daniel** | US02 Quiz conceitual · US19 Seleção de personagem · US20 Dificuldade · US22 Obstáculos móveis · US23 Continuar do checkpoint · US24 Avaliação sem reinício | Milestone Sprint 03; commits `e04e96b` e `f016586` | Código das US19, US20, US22, US23 e US24 escrito com apoio do Claude (assistente de IA); aplicado, compilado e testado pela dupla |
 | **Antonio e Kauã** | US01 Introdução narrativa · US03 Desbloqueio de níveis · US04 Chamados nos terminais · US05 Painel de pendências · US06 Exibição do chamado · US07 Escolha com custo/benefício | Milestone Sprint 03 e Sprint 02; commit `c26127d` (base modular, Antonio) | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
-| **Luis e Davi Braz** | US11 Persistência · US12 Gatilho do escândalo · US13 Viés: dataset · US14 Viés: resultado · US15 Conclusão do Ato 3 · US16 Cálculo do final | Milestone Sprint 03; commits `8bc2ab2` (GP06, Luis), `5ff8592` (GP01, Davi Braz) e `f016586` | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **Luis e Davi Braz** | US11 Persistência · US12 Gatilho do escândalo · US13 Viés: dataset · US14 Viés: resultado · US15 Conclusão do Ato 4 · US16 Cálculo do final | Milestone Sprint 03; commits `8bc2ab2` (GP06, Luis), `5ff8592` (GP01, Davi Braz) e `f016586` | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
 | **Davi Pereira e Nalbert** | US08 Feedback · US09 Medidor de Confiança Pública · US10 Resumo do ato · US17 Exibição do final · US18 Novo jogo · US21 Chips e Enciclopédia | Milestone Sprint 03; commits `1e6e0ae` e `a7a1651` (Davi Pereira, README e progresso) | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
 
 ### Autoria da versão 3.0
@@ -199,7 +199,7 @@ Nos menus: setas para navegar, Z/Enter confirma, X/Esc volta. O jogo também ace
 
 ## Metodologia
 
-O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversation, Confirmation)**, validadas pelo critério **INVEST**, organizadas em um board Scrum (Jira) com sprints alinhadas aos 4 atos do jogo:
+O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversation, Confirmation)**, validadas pelo critério **INVEST**, organizadas em um board Scrum (Jira) com sprints alinhadas ao jogo:
 
 - Sprint 1 — Ato 1 / Onboarding
 - Sprint 2 — Ato 2 / Rotina de Chamados
