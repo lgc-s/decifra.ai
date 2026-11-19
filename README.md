@@ -64,28 +64,28 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 
 | Dupla | Entregas (Progresso Semanal) | Issues da Sprint 01 | Evidências | Uso de IA |
 | :--- | :--- | :--- | :--- | :--- |
-| **Nalbert e Davi Pereira** | Project Model Canvas · Personas · Wireframes · Entrega u1 IHC | Issues do milestone Sprint 01 (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
-| **Luis e Davi Braz** | Visão e Requisitos · Setup do GitHub · Evolução do código · Entrega u1 FDS | Issues do milestone Sprint 01 (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
-| **João e Carlos Daniel** | Rascunhos da Tela de Jogo · Núcleo jogável em C · Backlog · Entrega u1 PIF | Issues do milestone Sprint 01 (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
-| **Antonio e Kauã** | Código Inicial · Regras formalizadas · Entrega u1 LMC e FP2 | Issues do milestone Sprint 01 (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **Nalbert e Davi Pereira** | Project Model Canvas · Personas · Wireframes · Entrega u1 IHC | Issues do milestone Sprint 01 e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **Luis e Davi Braz** | Visão e Requisitos · Setup do GitHub · Evolução do código · Entrega u1 FDS | Issues do milestone Sprint 01  e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **João e Carlos Daniel** | Rascunhos da Tela de Jogo · Núcleo jogável em C · Backlog · Entrega u1 PIF | Issues do milestone Sprint 01  e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **Antonio e Kauã** | Código Inicial · Regras formalizadas · Entrega u1 LMC e FP2 | Issues do milestone Sprint 01  e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
 
 ### Relato de Pares — Sprint 02
 
 | Dupla | Histórias de usuário | Evidências | Uso de IA |
 | :--- | :--- | :--- | :--- |
-| **Equipe** | US04 Geração de chamados (#13), reaberta e ajustada na Sprint 03 | Milestone Sprint 02 (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio de ferramentas de IA |
-| **Equipe** | US05 Fila de priorização (#14), reaberta e ajustada na Sprint 03 | Milestone Sprint 02 (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio de ferramentas de IA |
-| **Equipe** | US06 Exibição do ticket de chamado (#15) | Milestone Sprint 02 (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio de ferramentas de IA |
+| **Equipe** | US04 Geração de chamados (#13), reaberta e ajustada na Sprint 03 | Milestone Sprint 02  e no Jira (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio de ferramentas de IA |
+| **Equipe** | US05 Fila de priorização (#14), reaberta e ajustada na Sprint 03 | Milestone Sprint 02  e no Jira (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio de ferramentas de IA |
+| **Equipe** | US06 Exibição do ticket de chamado (#15) | Milestone Sprint 02  e no Jira (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio de ferramentas de IA |
 | **Todas** | Backlog revisado · Protótipo jogável · Teste de usabilidade (semanas 10 a 12) | Progresso Semanal | Desenvolvido e testado pelas duplas, com apoio de ferramentas de IA |
 
 ### Relato de Pares — Sprint 03
 
 | Dupla | Histórias de usuário | Evidências (issues e commits) | Uso de IA |
 | :--- | :--- | :--- | :--- |
-| **João e Carlos Daniel** | US02 Quiz conceitual · US19 Seleção de personagem · US20 Dificuldade · US22 Obstáculos móveis · US23 Continuar do checkpoint · US24 Avaliação sem reinício | Milestone Sprint 03; commits `e04e96b` e `f016586` | Código das US19, US20, US22, US23 e US24 escrito com apoio do Claude (assistente de IA); aplicado, compilado e testado pela dupla |
-| **Antonio e Kauã** | US01 Introdução narrativa · US03 Desbloqueio de níveis · US04 Chamados nos terminais · US05 Painel de pendências · US06 Exibição do chamado · US07 Escolha com custo/benefício | Milestone Sprint 03 e Sprint 02; commit `c26127d` (base modular, Antonio) | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
-| **Luis e Davi Braz** | US11 Persistência · US12 Gatilho do escândalo · US13 Viés: dataset · US14 Viés: resultado · US15 Conclusão do Ato 4 · US16 Cálculo do final | Milestone Sprint 03; commits `8bc2ab2` (GP06, Luis), `5ff8592` (GP01, Davi Braz) e `f016586` | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
-| **Davi Pereira e Nalbert** | US08 Feedback · US09 Medidor de Confiança Pública · US10 Resumo do ato · US17 Exibição do final · US18 Novo jogo · US21 Chips e Enciclopédia | Milestone Sprint 03; commits `1e6e0ae` e `a7a1651` (Davi Pereira, README e progresso) | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **João e Carlos Daniel** | US02 Quiz conceitual · US19 Seleção de personagem · US20 Dificuldade · US22 Obstáculos móveis · US23 Continuar do checkpoint · US24 Avaliação sem reinício | Milestone Sprint 03  e no Jira; commits `e04e96b` e `f016586` | Código das US19, US20, US22, US23 e US24 escrito com apoio do Claude (assistente de IA); aplicado, compilado e testado pela dupla |
+| **Antonio e Kauã** | US01 Introdução narrativa · US03 Desbloqueio de níveis · US04 Chamados nos terminais · US05 Painel de pendências · US06 Exibição do chamado · US07 Escolha com custo/benefício | Milestone Sprint 03 e Sprint 02  e no Jira; commit `c26127d` (base modular, Antonio) | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **Luis e Davi Braz** | US11 Persistência · US12 Gatilho do escândalo · US13 Viés: dataset · US14 Viés: resultado · US15 Conclusão do Ato 4 · US16 Cálculo do final | Milestone Sprint 03  e no Jira; commits `8bc2ab2` (GP06, Luis), `5ff8592` (GP01, Davi Braz) e `f016586` | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
+| **Davi Pereira e Nalbert** | US08 Feedback · US09 Medidor de Confiança Pública · US10 Resumo do ato · US17 Exibição do final · US18 Novo jogo · US21 Chips e Enciclopédia | Milestone Sprint 03  e no Jira; commits `1e6e0ae` e `a7a1651` (Davi Pereira, README e progresso) | Desenvolvido e testado pela dupla, com apoio de ferramentas de IA |
 
 ### Autoria da versão 3.0
 
