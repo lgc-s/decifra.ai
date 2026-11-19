@@ -199,12 +199,9 @@ Nos menus: setas para navegar, Z/Enter confirma, X/Esc volta. O jogo também ace
 
 ## Metodologia
 
-O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversation, Confirmation)**, validadas pelo critério **INVEST**, organizadas em um board Scrum (Jira) com sprints alinhadas ao jogo:
+O desenvolvimento segue histórias de usuário no formato 3C (Card, Conversation, Confirmation), validadas pelo critério INVEST, organizadas em um board Scrum no Jira. As histórias e os milestones (Sprints 01, 02 e 03) também estão registrados nas Issues deste repositório, ligadas aos commits.
 
-- Sprint 1 — Ato 1 / Onboarding
-- Sprint 2 — Ato 2 / Rotina de Chamados
-- Sprint 3 — Ato 3 / Escândalo
-- Sprint 4 — Ato 4 / Desfecho
+Sprints: 01 (base e Ato 1) 02 (chamados, US04 a US06) e 03 (versão 3.0: US19 a US26).
 
 ---
 
@@ -214,14 +211,10 @@ O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversati
 
 🎥 [Assistir ao screencast do protótipo](https://www.youtube.com/watch?v=Xda-MFSF_Vs)
 
-## SPRINT1 E BACKLOG
+## SPRINT 3 E BACKLOG
 
 
-<img width="287" height="786" alt="backlog" src="https://github.com/user-attachments/assets/5ae978bf-23c4-4ce0-9d86-7a98be9b0999"/>
+
+## Screencast Sprint 3
 
 
-<img width="1600" height="508" alt="sprints" src="https://github.com/user-attachments/assets/c018fdfd-5b19-493d-8934-afd76db72780" />
-
-## Screencast Sprint 1
-
-https://www.youtube.com/watch?v=LN18BlokvUo
