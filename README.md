@@ -87,15 +87,6 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | **Luis e Davi Braz** | US11 Persistência · US12 Gatilho do escândalo · US13 Viés: dataset · US14 Viés: resultado · US15 Conclusão do Ato 4 · US16 Cálculo do final | Milestone Sprint 03  e no Jira; commits `8bc2ab2` (GP06, Luis), `5ff8592` (GP01, Davi Braz) e `f016586` | Desenvolvido e testado pela dupla, com apoio do claude e chat gpt |
 | **Davi Pereira e Nalbert** | US08 Feedback · US09 Medidor de Confiança Pública · US10 Resumo do ato · US17 Exibição do final · US18 Novo jogo · US21 Chips e Enciclopédia | Milestone Sprint 03  e no Jira; commits `1e6e0ae` e `a7a1651` (Davi Pereira, README e progresso) | Desenvolvido e testado pela dupla, com apoio do claude e gemini |
 
-### Prints da nova sprint e do Backlog
-
-<img width="721" height="695" alt="WhatsApp Image 2026-11-19 at 19 38 53" src="https://github.com/user-attachments/assets/738f1eb8-2090-4810-aa7f-fe6a95735f15" />
-
-
-
-<img width="1547" height="832" alt="WhatsApp Image 2026-11-19 at 19 25 04" src="https://github.com/user-attachments/assets/f1f2b3d3-842b-4400-82fa-eb04c30097b0" />
-
-
 ### Autoria da versão 3.0
 
 | História | Origem / ideia | Implementação (Git) | Apoio de IA |
@@ -221,6 +212,8 @@ Sprints: 01 (base e Ato 1) 02 (chamados, US04 a US06) e 03 (versão 3.0: US19 a 
 🎥 [Assistir ao screencast do protótipo](https://www.youtube.com/watch?v=Xda-MFSF_Vs)
 
 ## SPRINT 3 E BACKLOG
+
+<img width="1547" height="832" alt="WhatsApp Image 2026-11-19 at 19 25 04" src="https://github.com/user-attachments/assets/e703b1cd-2897-45ad-9566-6ee8d1e80fae" />
 
 
 
