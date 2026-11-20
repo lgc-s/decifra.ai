@@ -52,11 +52,16 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | 8-9    | Entrega u1  FP2              | Kauã e Antonio      |   FP2    |
 | 10-11  | Backlog revisado             | João e Carlos       |   FP2    |
 | 10-11  | Evolução do código           | Luis e Davi B       |   PIF    |
-| 11-12  | Protótipo jogável            | Carlos e Joao       |   PIF    |
-| 11-12  | Ajuda na prototipação        |  Luis  e Davi P     |   PIF    |
-| 11-12  | Teste de usabilidade         |  Kawan e Antonio G  |   PIF    |
-| 11-12  | Teste de uso                 | Carlos Davi         |   PIF    |
-
+| 11-12  | Protótipo jogável            | Carlos e João       |   PIF    |
+| 11-12  | Ajuda na prototipação        | Luis  e Davi P      |   PIF    |
+| 11-12  | Teste de usabilidade         | Kauã e Antonio      |   PIF    |
+| 11-12  | Teste de uso                 | Carlos e Davi P     |   PIF    |
+| 13/14  | Validação                    | Antonio e João      |   LMC    |
+| 13/14  | Testes                       | Luis e Davi B       |   FDS    |
+| 13/14  | Ajustes                      | Davi P e Kauã       |   IHC    |
+| 15/16  | Versão Final                 | João e Antonio      |   PIF    |
+| 15/16  | Documentação                 | Davi B e Kauã       |   FDS    |
+| 15/16  | Fechamento                   | Carlos e Luis       |   FP2    |
 
 ### Commits dos pares
 
