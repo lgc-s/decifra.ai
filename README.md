@@ -1,10 +1,10 @@
 # Rev.IA — Decifra.IA
 
-> Um jogo de terminal sobre alfabetização em Inteligência Artificial.
+> Um jogo de plataforma 2D sobre alfabetização em Inteligência Artificial. **Versão 3.0**
 
-Rev.IA (nome do projeto acadêmico) é um jogo casual em modo texto/terminal cujo objetivo é ensinar, de forma prática e narrativa, como funcionam — e onde falham — os sistemas de Inteligência Artificial presentes no dia a dia: viés algorítmico, alucinações, decisões automatizadas e uso seguro de ferramentas de IA generativa.
+Rev.IA (nome do projeto acadêmico) é um jogo de plataforma 2D, feito em **C com Raylib**, cujo objetivo é ensinar, de forma prática e narrativa, como funcionam — e onde falham — os sistemas de Inteligência Artificial presentes no dia a dia: viés algorítmico, alucinações, decisões automatizadas e uso seguro de ferramentas de IA generativa.
 
-O jogo é desenvolvido como projeto da disciplina **Projetos 2** (2º período de ADS) da **CESAR School**, integrando também os componentes de Lógica, IHC/HCI e FDS/FP2.
+O jogo é desenvolvido como projeto da disciplina **Projetos 2** (2º período de ADS, turma **ADS - Embarque Digital**) da **CESAR School**, integrando também os componentes de Lógica, IHC/HCI e FDS/FP2.
 
 ---
 
@@ -12,7 +12,7 @@ O jogo é desenvolvido como projeto da disciplina **Projetos 2** (2º período d
 
 Você é recém-contratado(a) do **Departamento de Alfabetização Algorítmica** de uma cidade fictícia onde uma IA generalista chamada **NÓVA** foi implantada silenciosamente em quase todos os serviços públicos — trânsito, crédito, notícias, saúde. Ninguém entende bem como ela decide.
 
-Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar cidadãos que abrem chamados de reclamação sobre ela.
+Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar cidadãos que abrem chamados de reclamação sobre ela. Ao começar um novo jogo, você escolhe o seu personagem: **Alex, Bia, Caio ou Dani**.
 
 ### Equipe
 
@@ -52,27 +52,79 @@ Seu cargo, **Decifrador(a)**, existe para auditar as decisões da NÓVA e educar
 | 8-9    | Entrega u1  FP2              | Kauã e Antonio      |   FP2    |
 | 10-11  | Backlog revisado             | João e Carlos       |   FP2    |
 | 10-11  | Evolução do código           | Luis e Davi B       |   PIF    |
-| 12     | Protótipo jogável            | Carlos e Joao       |   PIF    |
-| 12-13  | Ajuda na prototipação        |  Luis  e Davi P     |   PIF    |
-| 12-13  | Teste de usabilidade         |  Kawan e Antonio G  |   PIF    |
-| 12-13  | Teste de uso                 | Carlos Davi         |   PIF    |
+| 11-12  | Protótipo jogável            | Carlos e João       |   PIF    |
+| 11-12  | Ajuda na prototipação        | Luis  e Davi P      |   PIF    |
+| 11-12  | Teste de usabilidade         | Kauã e Antonio      |   PIF    |
+| 11-12  | Teste de uso                 | Carlos e Davi P     |   PIF    |
+| 13/14  | Validação                    | Antonio e João      |   LMC    |
+| 13/14  | Testes                       | Luis e Davi B       |   FDS    |
+| 13/14  | Ajustes                      | Davi P e Kauã       |   IHC    |
+| 15/16  | Versão Final                 | João e Antonio      |   PIF    |
+| 15/16  | Documentação                 | Davi B e Kauã       |   FDS    |
+| 15/16  | Fechamento                   | Carlos e Luis       |   FP2    |
+
+### Commits dos pares
+
+### Relato de Pares — Sprint 01
+
+| Dupla | Entregas (Progresso Semanal) | Issues da Sprint 01 | Evidências | Uso de IA |
+| :--- | :--- | :--- | :--- | :--- |
+| **Nalbert e Davi Pereira** | Project Model Canvas · Personas · Wireframes · Entrega u1 IHC | Issues do milestone Sprint 01 e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio do claude e chat gpt |
+| **Luis e Davi Braz** | Visão e Requisitos · Setup do GitHub · Evolução do código · Entrega u1 FDS | Issues do milestone Sprint 01  e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio do claude |
+| **João e Carlos Daniel** | Rascunhos da Tela de Jogo · Núcleo jogável em C · Backlog · Entrega u1 PIF | Issues do milestone Sprint 01  e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio do claude |
+| **Antonio e Kauã** | Código Inicial · Regras formalizadas · Entrega u1 LMC e FP2 | Issues do milestone Sprint 01  e no Jira (8 de 8 fechadas) | Milestone Sprint 01 e entregas registradas no Progresso Semanal | Desenvolvido e testado pela dupla, com apoio do claude |
+
+### Relato de Pares — Sprint 02
+
+| Dupla | Histórias de usuário | Evidências | Uso de IA |
+| :--- | :--- | :--- | :--- |
+| **Equipe** | US04 Geração de chamados (#13), reaberta e ajustada na Sprint 03 | Milestone Sprint 02  e no Jira (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio do claude |
+| **Equipe** | US05 Fila de priorização (#14), reaberta e ajustada na Sprint 03 | Milestone Sprint 02  e no Jira (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio do claude |
+| **Equipe** | US06 Exibição do ticket de chamado (#15) | Milestone Sprint 02  e no Jira (3 de 3 fechadas) | Desenvolvido e testado pela equipe, com apoio do claude |
+| **Todas** | Backlog revisado · Protótipo jogável · Teste de usabilidade (semanas 10 a 12) | Progresso Semanal | Desenvolvido e testado pelas duplas, com apoio do claude |
+
+### Relato de Pares — Sprint 03
+
+| Dupla | Histórias de usuário | Evidências (issues e commits) | Uso de IA |
+| :--- | :--- | :--- | :--- |
+| **João e Carlos Daniel** | US02 Quiz conceitual · US19 Seleção de personagem · US20 Dificuldade · US22 Obstáculos móveis · US23 Continuar do checkpoint · US24 Avaliação sem reinício | Milestone Sprint 03  e no Jira; commits `e04e96b` e `f016586` | Código das US19, US20, US22, US23 e US24 escrito com apoio do Claude (assistente de IA); aplicado, compilado e testado pela dupla |
+| **Antonio e Kauã** | US01 Introdução narrativa · US03 Desbloqueio de níveis · US04 Chamados nos terminais · US05 Painel de pendências · US06 Exibição do chamado · US07 Escolha com custo/benefício | Milestone Sprint 03 e Sprint 02  e no Jira; commit `c26127d` (base modular, Antonio) | Desenvolvido e testado pela dupla, com apoio do claude e chat gpt |
+| **Luis e Davi Braz** | US11 Persistência · US12 Gatilho do escândalo · US13 Viés: dataset · US14 Viés: resultado · US15 Conclusão do Ato 4 · US16 Cálculo do final | Milestone Sprint 03  e no Jira; commits `8bc2ab2` (GP06, Luis), `5ff8592` (GP01, Davi Braz) e `f016586` | Desenvolvido e testado pela dupla, com apoio do claude e chat gpt |
+| **Davi Pereira e Nalbert** | US08 Feedback · US09 Medidor de Confiança Pública · US10 Resumo do ato · US17 Exibição do final · US18 Novo jogo · US21 Chips e Enciclopédia | Milestone Sprint 03  e no Jira; commits `1e6e0ae` e `a7a1651` (Davi Pereira, README e progresso) | Desenvolvido e testado pela dupla, com apoio do claude e gemini |
+
+### Autoria da versão 3.0
+
+| História | Origem / ideia | Implementação (Git) | Apoio de IA |
+| :--- | :--- | :--- | :--- |
+| US19 Seleção de personagem | Davi Braz (GP01, `5ff8592`) | João Victor (`f016586`) | Claude |
+| US20 Dificuldade | Equipe | João Victor (`e04e96b`, `f016586`) | Claude |
+| US22 Obstáculos móveis | Equipe | João Victor (`e04e96b`) | Claude |
+| US23 Continuar do checkpoint | Bug reportado em teste | João Victor (`f016586`) | Claude |
+| US24 Avaliação sem reinício | Equipe | João Victor (`e04e96b`) | Claude |
+| US02, US09, US10, US11, US13, US14, US17, US18 (ajustes na v3.0) | Equipe | João Victor (`e04e96b`, `f016586`) | Claude |
+| US01 a US18 (base modular) e US21 | Equipe | Antonio Neto (`c26127d`) | Claude |
+
+A base modular do jogo entrou no repositório em um único commit (`c26127d`, Antonio Neto). Por isso o histórico do Git não mostra quem escreveu cada módulo: a divisão por dupla acima indica **quem ficou responsável por testar, revisar e explicar** cada história. Todos os integrantes declaram ter usado ferramentas de IA no desenvolvimento, e o uso está registrado na coluna "Apoio de IA" e nos relatos de cada dupla.
 
 ### Estrutura narrativa em atos
 
-| Ato | Nome | Descrição |
+| Ato | Fase | Descrição |
 |---|---|---|
-| 1 | Onboarding | 4-5 missões de quiz conceitual (o que é IA, dados, treino) — tutorial disfarçado de capacitação obrigatória |
-| 2 | Rotina de chamados | O grosso do jogo: turnos diários com 1-3 chamados novos, misturando quiz e cenário de decisão, com fila de prioridade |
-| 3 | O escândalo | Um chamado revela viés discriminatório em um subsistema da NÓVA, disparando o mini-jogo de investigação forense |
-| 4 | Desfecho | O histórico de decisões (medidor de Confiança Pública) define um dos 3-4 finais possíveis |
+| 1 — Onboarding | Departamento | Tutorial disfarçado de capacitação: o jogador aprende os controles e os terminais explicam IA, dados e treinamento. Termina com a **Avaliação 1** |
+| 2 — Rotina de chamados | Distrito NÓVA (Trânsito, Crédito, Notícias, Saúde) | Quatro chamados de cidadãos, com cenários de decisão de custo/benefício não óbvio. Termina com a **Avaliação 2** |
+| 3 — O escândalo | Arquivo Sul | O jogador reúne 3 evidências de viés discriminatório, joga o **mini-jogo de viés** e toma a decisão do chamado decisivo. Termina com a **Avaliação 3** |
+| 4 — Desfecho | Salão da Cidade | Duas decisões finais e a **Avaliação 4**. A Confiança Pública define um dos **4 finais**: Cidade Decifrada, Reparo Lento, Desconfiança ou Silêncio |
 
 ### Mecânicas principais
 
-- **Manual de Treinamento** — quizzes conceituais que desbloqueiam níveis
-- **Chamados (tickets)** — cenários de decisão com 2-4 opções de resposta, cada uma com custo/benefício não óbvio
-- **Medidor de Confiança Pública (0-100)** — reflete o impacto acumulado das decisões do jogador
-- **Mini-jogo de viés** — o jogador monta um dataset de treino e observa o viés se manifestar nos resultados simulados
-- **Resumo do dia** — dashboard ASCII exibido a cada N chamados, reforçando a sensação de progresso salvo
+- **Plataforma com movimento preciso** — pulo de altura variável, dash em 8 direções, escalada com energia limitada e wall jump
+- **Obstáculos que ensinam** — plataformas que desmoronam (dados incompletos), plataformas ilusórias (alucinações), espinhos (erros que custam caro), *bugs* que andam pelo chão e *dados corrompidos* que caem do céu depois de um aviso
+- **Avaliações (quizzes conceituais)** — 4 sessões de 5 perguntas com dificuldade crescente. Cada acerto vale **+2** e cada erro vale **−3** de Confiança Pública; errar **não** reinicia a sessão, o jogador termina a avaliação e vê a soma ao final
+- **Chamados (tickets)** — cenários de decisão com 3-4 opções de resposta, cada uma com custo/benefício não óbvio e uma explicação educativa
+- **Medidor de Confiança Pública (0-100)** — reflete o impacto acumulado das decisões, das avaliações e do mini-jogo
+- **Mini-jogo de viés** — o jogador monta o conjunto de treino da NÓVA (casos do Bairro Sul, uso do bairro, uso do CEP, correção do histórico) e observa o viés se manifestar nos resultados simulados
+- **Enciclopédia** — chips de dados escondidos nas fases desbloqueiam verbetes sobre IA
+- **Personagens e dificuldades** — quatro personagens jogáveis e três dificuldades (**Normal**, **Assistido** e **Desafio**). Em dificuldades mais altas, as fases têm mais obstáculos, mais rápidos, e as perguntas sorteadas são mais difíceis
 
 ---
 
@@ -92,37 +144,58 @@ O design do jogo é guiado por dois perfis-alvo principais:
 - Narrativa com começo, meio e fim que gere engajamento
 - Interface simples e acessível, voltada também a públicos não-nativos digitais
 - Tutorial, créditos, configurações e dados salvos
-- Sessões de história entre as fases; gameplay primário baseado em desafios conceituais e contextuais
-- 3 setores narrativos e 4 sessões de perguntas (10 questões cada, dificuldade crescente)
-- Todas as 10 perguntas de uma fase devem estar corretas para avançar; em caso de erro, a fase reinicia com variações mantendo coerência narrativa
+- Escolha de personagem ao começar um novo jogo
+- Sessões de história entre as fases; gameplay primário baseado em plataforma e em desafios conceituais e contextuais
+- 4 atos (fases) e 4 sessões de perguntas (5 questões cada, dificuldade crescente)
+- Acertos aumentam a Confiança Pública e erros a reduzem; o jogador sempre termina a avaliação (não há reinício na pergunta 1)
+- Dificuldade selecionável (Normal, Assistido, Desafio), que altera os obstáculos das fases e a dificuldade das perguntas
 
 ### Requisitos Não Funcionais (RNF)
-- Desenvolvido em **C** (núcleo), visando estabilidade e ausência de conflitos técnicos
-- Salvamento de progresso e feedback para todas as respostas do usuário, corretas ou não
+- Desenvolvido em **C (C11)** com a biblioteca **Raylib**, visando estabilidade e ausência de conflitos técnicos
+- Salvamento de progresso (inclui o último checkpoint e o personagem) e feedback para todas as respostas do usuário, corretas ou não
 - Compatível com Windows
-- Pontuação final de proficiência baseada em tempo de conclusão e quantidade de erros, gerando um arquivo de certificação de conclusão
+- Tela de resultado final com Confiança Pública, decisões, tempo de jogo e quantidade de quedas
 
 ---
+
 ## Como jogar (Windows)
 
-1. Abra a página *Releases* deste repositório e baixe o arquivo .zip da versão mais recente.
-2. Extraia a pasta *inteira* (não mova o revia.exe sozinho).
-3. Dê dois cliques em revia.exe.
+1. Abra a página [**Releases**](https://github.com/lgc-s/decifra.ai/releases) deste repositório e baixe o arquivo `.zip` da versão mais recente.
+   Também é possível baixar o pacote mais novo na aba **Actions**, na última execução, em *Artifacts* → `REVIA-Windows`.
+2. Extraia a pasta **inteira** (não mova o `revia.exe` sozinho).
+3. Dê dois cliques em `revia.exe`.
 
-Controles: setas ou A/D para mover, Z / Espaço para pular, X ou Shift para o dash, C para escalar, E / Enter para interagir, Esc para pausar.
+| Ação | Teclado |
+|---|---|
+| Mover | Setas ou A / D |
+| Pular (segure para pular mais alto) | Z, Espaço ou K |
+| Dash (8 direções) | X, Shift ou J |
+| Agarrar a parede e escalar | C, Ctrl ou L |
+| Interagir (falar, atender, usar terminal) | E ou Enter |
+| Pausar | Esc ou P |
+| Tela cheia | F11 |
+
+Nos menus: setas para navegar, Z/Enter confirma, X/Esc volta. O jogo também aceita controle (gamepad).
+
 ---
 
 ## Stack técnica
 
-- **C** — núcleo do jogo (loop principal, terminal, persistência em arquivo binário)
-- **Haskell** — módulos de regras (lógica de decisão, cálculo de viés, mapeamento de finais)
-- Sem banco de dados: persistência via arquivo binário (struct serializada, com número mágico/checksum para validar integridade)
-- Sem engine gráfica nem multiplayer/rede — experiência 100% baseada em terminal
+- **C (C11)** — jogo inteiro: laço de passo fixo, física, fases, narrativa e interface
+- **Raylib** — janela, entrada, desenho e áudio. A arte (pixel art) e o áudio são gerados por código
+- **Make / CMake** — compilação. As regras do jogo ficam separadas da interface e têm testes automáticos sem janela (`make test`)
+- Sem banco de dados: persistência via arquivo binário (struct serializada, com número mágico e checksum para validar integridade)
+- **GitHub Actions** — compila o jogo para Windows a cada push e gera o pacote `REVIA-Windows`
+- Sem multiplayer nem rede
 
 ---
+
 ## Como Instalar e Rodar
-📖 [Acesse o Guia Passo a Passo de Clonagem e Execução](./C/como%20fazer%20o%20c%C3%B3digo%20rodar/PASSO_A_PASSO_CLONAR_E_RODAR.txt)
---- 
+
+📖 [Acesse o guia completo de compilação e execução (Windows, Linux e macOS)](./codigoC/revia/docs/README.md)
+
+---
+
 ## Diagramas de Atividades
 
 📊 [Ver diagramas de atividades de cada história de usuário](./diagrama-atividades.pdf)
@@ -131,12 +204,9 @@ Controles: setas ou A/D para mover, Z / Espaço para pular, X ou Shift para o da
 
 ## Metodologia
 
-O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversation, Confirmation)**, validadas pelo critério **INVEST**, organizadas em um board Scrum (Jira) com sprints alinhadas aos 4 atos do jogo:
+O desenvolvimento segue histórias de usuário no formato 3C (Card, Conversation, Confirmation), validadas pelo critério INVEST, organizadas em um board Scrum no Jira. As histórias e os milestones (Sprints 01, 02 e 03) também estão registrados nas Issues deste repositório, ligadas aos commits.
 
-- Sprint 1 — Ato 1 / Onboarding
-- Sprint 2 — Ato 2 / Rotina de Chamados
-- Sprint 3 — Ato 3 / Escândalo
-- Sprint 4 — Ato 4 / Desfecho
+Sprints: 01 (base e Ato 1) 02 (chamados, US04 a US06) e 03 (versão 3.0: US19 a US26).
 
 ---
 
@@ -146,15 +216,12 @@ O desenvolvimento segue histórias de usuário no formato **3C (Card, Conversati
 
 🎥 [Assistir ao screencast do protótipo](https://www.youtube.com/watch?v=Xda-MFSF_Vs)
 
-## SPRINT1 E BACKLOG
+## SPRINT 3 E BACKLOG
+
+<img width="1547" height="832" alt="WhatsApp Image 2026-11-19 at 19 25 04" src="https://github.com/user-attachments/assets/e703b1cd-2897-45ad-9566-6ee8d1e80fae" />
 
 
-<img width="287" height="786" alt="backlog" src="https://github.com/user-attachments/assets/5ae978bf-23c4-4ce0-9d86-7a98be9b0999"/>
 
+## Screencast Sprint 3
 
-<img width="1600" height="508" alt="sprints" src="https://github.com/user-attachments/assets/c018fdfd-5b19-493d-8934-afd76db72780" />
-
-## Screencast Sprint 1
-
-https://www.youtube.com/watch?v=LN18BlokvUo&authuser=0/>
 

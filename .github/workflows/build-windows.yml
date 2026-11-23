@@ -11,6 +11,7 @@ jobs:
     defaults:
       run:
         shell: msys2 {0}
+        working-directory: codigoC/revia
     steps:
       - uses: actions/checkout@v4
 
@@ -19,26 +20,30 @@ jobs:
           msystem: UCRT64
           update: true
           install: >-
+            make
             mingw-w64-ucrt-x86_64-gcc
-            mingw-w64-ucrt-x86_64-SDL2
-            mingw-w64-ucrt-x86_64-SDL2_ttf
-            mingw-w64-ucrt-x86_64-SDL2_mixer
+            mingw-w64-ucrt-x86_64-pkgconf
+            mingw-w64-ucrt-x86_64-raylib
 
       - name: Compilar
-        working-directory: C
-        run: |
-          gcc Fatoramento.c -o DecifraIA.exe -mwindows \
-            -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_mixer -lm
+        run: make
 
       - name: Montar a pasta do jogo
-        working-directory: C
         run: |
-          mkdir -p ../dist/DecifraIA
-          cp DecifraIA.exe ../dist/DecifraIA/
-          cp -r audio ../dist/DecifraIA/
-          ldd DecifraIA.exe | grep ucrt64 | awk '{print $3}' | xargs -I{} cp {} ../dist/DecifraIA/
+          ls -la build
+          mkdir -p ../../dist/REVIA
+          cp build/revia.exe ../../dist/REVIA/
+          cp -r levels ../../dist/REVIA/
+          cp -r assets ../../dist/REVIA/ || true
+          ldd build/revia.exe | tee /tmp/ldd.txt
+          for dll in $(awk '/ucrt64/ {print $3}' /tmp/ldd.txt); do
+            cp "$dll" ../../dist/REVIA/ || true
+          done
+          cp /ucrt64/bin/libraylib*.dll ../../dist/REVIA/ 2>/dev/null || true
+          cp /ucrt64/bin/glfw3.dll ../../dist/REVIA/
+          ls -la ../../dist/REVIA
 
       - uses: actions/upload-artifact@v4
         with:
-          name: DecifraIA-Windows
-          path: dist/DecifraIA
+          name: REVIA-Windows
+          path: dist/REVIA
