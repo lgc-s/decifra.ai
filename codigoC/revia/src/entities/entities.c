@@ -34,7 +34,7 @@ void entities_update(Level *lv, Player *p, float dt, EntityEvents *ev) {
     for (int i = 0; i < lv->ncrystals; i++) {
         Crystal *cr = &lv->crystals[i];
         if (cr->cooldown > 0) { cr->cooldown -= dt; continue; }
-        if (!p->dash_ready && dist2(c, cr->pos) < 10.0f * 10.0f) {
+            if (dist2(c, cr->pos) < 10.0f * 10.0f) {
             p->dash_ready = true;
             cr->cooldown = CRYSTAL_RESPAWN;
             ev->crystal = true;
