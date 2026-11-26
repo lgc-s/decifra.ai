@@ -1,4 +1,4 @@
-# Rev.IA — Decifra.IA
+=# Rev.IA — Decifra.IA
 
 > Um jogo de plataforma 2D sobre alfabetização em Inteligência Artificial. **Versão 3.0**
 
@@ -217,10 +217,11 @@ externos à equipe para avaliar a experiência
 de jogo e identificar possíveis problemas.
 
 ### Relatório completo
-[Consultar relatório de usabilidade](codigoC/revia/docs/teste/relat_rio_de_teste_de_usabilidade.md)
+[Relatório de Testes de Usabilidade](codigoC/revia/docs/teste/relat_rio_de_teste_de_usabilidade.md)
 
 ### Evidências
-![Teste de usabilidade](codigoC/revia/docs/teste)
+[Prints dos Testes de Usabilidade](codigoC/revia/docs/teste/)
+
 ## Demonstração
 
 🎥 [Assistir a demonstração do Rev.IA 3.0](https://youtu.be/ROkdYKEQ5TY)
