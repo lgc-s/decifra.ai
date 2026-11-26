@@ -210,6 +210,18 @@ Sprints: 01 (base e Ato 1) 02 (chamados, US04 a US06) e 03 (versão 3.0: US19 a 
 
 ---
 
+## Testes de Usabilidade — v3.0
+
+Foram realizados testes com três participantes
+externos à equipe para avaliar a experiência
+de jogo e identificar possíveis problemas.
+
+### Relatório completo
+[Consultar relatório de usabilidade](docs/teste/relat_rio_de_teste_de_usabilidade.md)
+
+### Evidências
+![Teste de usabilidade](docs/teste)
+
 ## Demonstração
 
 🎥 [Assistir a demonstração do Rev.IA 3.0](https://youtu.be/ROkdYKEQ5TY)
