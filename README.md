@@ -212,9 +212,7 @@ Sprints: 01 (base e Ato 1) 02 (chamados, US04 a US06) e 03 (versão 3.0: US19 a 
 
 ## Demonstração
 
-[![Assistir ao screencast do protótipo](https://img.youtube.com/vi/Xda-MFSF_Vs/0.jpg)](https://www.youtube.com/watch?v=Xda-MFSF_Vs)
-
-🎥 [Assistir ao screencast do protótipo](https://www.youtube.com/watch?v=Xda-MFSF_Vs)
+🎥 [Assistir a demonstração do Rev.IA 3.0](https://youtu.be/ROkdYKEQ5TY)
 
 ## SPRINT 3 E BACKLOG
 
