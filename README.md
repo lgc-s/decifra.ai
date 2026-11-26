@@ -217,11 +217,10 @@ externos à equipe para avaliar a experiência
 de jogo e identificar possíveis problemas.
 
 ### Relatório completo
-[Consultar relatório de usabilidade](docs/teste/relat_rio_de_teste_de_usabilidade.md)
+[Consultar relatório de usabilidade](codigoC/revia/docs/teste/relat_rio_de_teste_de_usabilidade.md)
 
 ### Evidências
-![Teste de usabilidade](docs/teste)
-
+![Teste de usabilidade](codigoC/revia/docs/teste)
 ## Demonstração
 
 🎥 [Assistir a demonstração do Rev.IA 3.0](https://youtu.be/ROkdYKEQ5TY)
