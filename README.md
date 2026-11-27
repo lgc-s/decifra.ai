@@ -235,3 +235,8 @@ de jogo e identificar possíveis problemas.
 ## Screencast Sprint 3
 
 
+🎬 [Assistir ao ScreenCast da Sprint 3](https://youtu.be/6gsgztY2blo?si=Yh6y_SYUfns7bMco)
+
+<img width="1437" height="836" alt="Print da Sprint 03" src="https://github.com/user-attachments/assets/6d47e68d-1ede-43e4-a57d-968db5aac027" />
+
+
